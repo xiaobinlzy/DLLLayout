@@ -8,7 +8,8 @@
 
 #import "DLLAppDelegate.h"
 
-@implementation DLLAppDelegate
+@implementation DLLAppDelegate {
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
