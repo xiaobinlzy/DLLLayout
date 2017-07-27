@@ -5,20 +5,20 @@
 [![License](https://img.shields.io/cocoapods/l/DLLLayout.svg?style=flat)](http://cocoapods.org/pods/DLLLayout)
 [![Platform](https://img.shields.io/cocoapods/p/DLLLayout.svg?style=flat)](http://cocoapods.org/pods/DLLLayout)
 
-## 介绍
+## Introduce
 DLLLayout 是一个基于 UIView.frame 的轻量级 iOS 布局框架。相比苹果的 AutoLayout，它有着更友善的 API 和更高的性能，虽然功能上不如 AutoLayout 大又全，比如不支持 greaterThan、lesserThan、priority 等，但也能够满足90%以上的业务场景。在性能上，如果需要通过视图内容自适应宽高（例如 UILabel、UIButton 根据内容计算宽高），布局耗时为苹果 AutoLayout 的 1/2 左右；反之如果设置了视图的宽高，布局耗时只有苹果 AutoLayout 的不到 1/8。
 
-## 原理
+## Theory
 给 UIView 设置布局规则，通过 hook UIView.layoutSubviews，在这个方法里对设置过布局规则的视图设置 frame，实现布局功能。因为布局活动触发在系统的 layoutSubviews 之前，所以仍然可以通过重写子类的 layoutSubviews 来实现自己的布局。
 
-## 演示工程
+## Example
 
 克隆仓库后，在Example目录下先运行 `pod install`，就可以运行演示工程。
 
-## 系统要求
+## Requirement
 iOS 6.0 +
 
-## 安装方法
+## Installation
 
 DLLLayout 可以通过 [CocoaPods](http://cocoapods.org) 获得。 只需要在你的 Podfile 中添加如下代码：
 
@@ -26,7 +26,7 @@ DLLLayout 可以通过 [CocoaPods](http://cocoapods.org) 获得。 只需要在�
 pod "DLLLayout"
 ```
 
-## 使用方法
+## Usage
 通常来说，一个视图的布局是一个矩形，**所以需要能够得到四条边的位置才能够进行布局**。但是一些视图，不如 UILabel、UIButton、UIImageView 等等，需要根据它们的内容来自动计算宽高，那么如果我们对这些视图不设置足够的条件，也会根据他们的内容自动计算出布局所用的宽高，不过这样会有一定的性能消耗。**如果不能够得到视图四边的位置，则会抛出异常。**
 <br/>
 在 UIView 实例化之后就可以对它设置布局规则，不需要像 AutoLayout 一样先加入到视图层级中再设置。
@@ -92,7 +92,11 @@ pod "DLLLayout"
     }];
 ```
 
-## 作者
+## Feature
+1. X、Y轴的依赖关系相互独立，避免一部分的循环依赖。
+2. 优化自适应宽高的性能。
+
+## Author
 
 xiaobinlzy, xiaobinlzy@163.com
 
