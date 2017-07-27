@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    /*
     _containerView = [[UIView alloc] init];
     _containerView.backgroundColor = [UIColor redColor];
     _containerView.tag = 1;
@@ -84,13 +84,56 @@
         .centerX(0)
         .bottomMargin(50);
     }];
+    */
+    [self testCode];
 }
 
 - (void)clickButton:(id)sender {
     _innerLabel.text = @"button has been clicked.\nbutton has been clicked.\nbutton has been clicked.";
     [UIView animateWithDuration:0.25 animations:^{
+        [_containerView dll_updateLayout:^(DLLLayout *layout) {
+            layout.width(300);
+        }];
         [_innerLabel dll_updateFrame];
     }];
+}
+
+- (void)testCode {
+    UIView *containerView = [[UIView alloc] init];
+    containerView.backgroundColor = [UIColor redColor];
+    UIView *leftInnerView = [[UIView alloc] init];
+    leftInnerView.backgroundColor = [UIColor yellowColor];
+    UIView *rightInnerView = [[UIView alloc] init];
+    rightInnerView.backgroundColor = [UIColor blueColor];
+    [containerView addSubview:leftInnerView];
+    [containerView addSubview:rightInnerView];
+    // containerView是父视图，leftInnerView和rightInnerView是两个子视图
+    
+    // 父视图宽度300，高度100，x和y都居中
+    [containerView dll_setLayout:^(DLLLayout *layout) {
+        layout.width(300)
+        .height(100)
+        .centerX(0)
+        .centerY(0);
+    }];
+    
+    // leftInnerView的宽度是父视图宽度的0.5倍少15，高度比父视图的高度少20，左边距10，y轴居中
+    [leftInnerView dll_setLayout:^(DLLLayout *layout) {
+        layout.relative.width.with(containerView.dll_width, 0.5, -15)
+        .relative.height.withOffset(containerView.dll_height, -20)
+        .leftMargin(10)
+        .centerY(0);
+    }];
+    
+    // leftInnerView的宽度是父视图宽度的0.5倍少15，高度比父视图的高度少20，右边距10，y轴居中
+    [rightInnerView dll_setLayout:^(DLLLayout *layout) {
+        layout.relative.width.with(containerView.dll_width, 0.5, -15)
+        .relative.height.to(leftInnerView.dll_height)
+        .rightMargin(10)
+        .centerY(0);
+    }];
+    
+    [self.view addSubview:containerView];
 }
 
 

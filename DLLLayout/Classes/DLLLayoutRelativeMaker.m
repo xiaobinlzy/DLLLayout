@@ -81,6 +81,9 @@
         _withMulti = ^DLLLayout *(DLLLayoutRelative relative, CGFloat multi) {
             return [weakSelf layoutWithRelative:relative offset:0 multi:multi];
         };
+        _with = ^DLLLayout *(DLLLayoutRelative relative, CGFloat multi, CGFloat offset) {
+            return [weakSelf layoutWithRelative:relative offset:offset multi:multi];
+        };
     }
     return self;
 }

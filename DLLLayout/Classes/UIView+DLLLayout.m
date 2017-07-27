@@ -135,6 +135,14 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
 }
 
 
+- (void)dll_removeAllFlags {
+    self.dll_layout.layoutValue.flag = 0;
+}
+
+- (void)dll_removeLayoutFlag:(DLLLayoutFlag)flag {
+    self.dll_layout.layoutValue.flag &= ~flag;
+}
+
 
 #pragma mark - dll property
 - (DLLLayoutRelative)dll_width {

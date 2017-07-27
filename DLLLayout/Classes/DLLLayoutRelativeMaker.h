@@ -11,6 +11,9 @@
 
 @class DLLLayout, DLLLayoutRelativeBridge;
 
+/**
+ 通过DLLLayoutRelativeMaker来创建视图布局依赖规则
+ */
 @interface DLLLayoutRelativeMaker : NSObject
 
 @property (nonatomic, readonly) DLLLayoutRelativeBridge *left;
@@ -40,5 +43,7 @@
 @property (nonatomic, readonly) DLLLayout *(^withOffset)(DLLLayoutRelative relative, CGFloat offset);
 
 @property (nonatomic, readonly) DLLLayout *(^withMulti)(DLLLayoutRelative relative, CGFloat multi);
+
+@property (nonatomic, readonly) DLLLayout *(^with)(DLLLayoutRelative relative, CGFloat multi, CGFloat offset);
 
 @end
