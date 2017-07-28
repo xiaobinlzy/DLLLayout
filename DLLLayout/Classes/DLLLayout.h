@@ -62,6 +62,10 @@ typedef DLLLayout *(^DLLLayoutNumberValue)(CGFloat);
  */
 @property (nonatomic, readonly) DLLLayoutNumberValue centerX;
 
+/**
+ 设置四周边距
+ */
+@property (nonatomic, readonly) DLLLayout *(^margin)(UIEdgeInsets edgeInsets);
 
 /**
  设置依赖关系，只能依赖父视图和同一层级子视图。

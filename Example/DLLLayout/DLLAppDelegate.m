@@ -7,13 +7,19 @@
 //
 
 #import "DLLAppDelegate.h"
+#import "DLLViewController.h"
 
 @implementation DLLAppDelegate {
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] init];
+    
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[DLLViewController alloc] init]];
+    controller.navigationBar.translucent = NO;
+    self.window.rootViewController = controller;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

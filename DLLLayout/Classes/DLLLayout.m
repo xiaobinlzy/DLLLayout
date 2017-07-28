@@ -102,6 +102,27 @@
             value.yRules = rules;
             return weakSelf;
         };
+        
+        _margin = ^DLLLayout *(UIEdgeInsets edgeInsets) {
+            value.flag |= DLLLayoutFlagLeftMargin | DLLLayoutFlagRightMargin | DLLLayoutFlagTopMargin | DLLLayoutFlagBottomMargin;
+            DLLLayoutRuleGroup xRules = value.xRules;
+            DLLLayoutRuleGroup yRules = value.yRules;
+            
+            xRules.head.type = DLLLayoutRuleTypeValue;
+            xRules.head.value = edgeInsets.left;
+            xRules.tail.type = DLLLayoutRuleTypeValue;
+            xRules.tail.value = edgeInsets.right;
+            
+            yRules.head.type = DLLLayoutRuleTypeValue;
+            yRules.head.value = edgeInsets.top;
+            yRules.tail.type = DLLLayoutRuleTypeValue;
+            yRules.tail.value = edgeInsets.bottom;
+            
+            value.xRules = xRules;
+            value.yRules = yRules;
+            
+            return weakSelf;
+        };
 
     }
     return self;
