@@ -7,72 +7,10 @@
 //
 
 #import <objc/runtime.h>
-#import "DLLLayoutValue.h"
 #import "DLLLayout+Private.h"
 #import "UIView+DLLLayoutPrivate.h"
+#import "DLLLayoutFunction.h"
 
-void dll_setupSubviewsHasNotLayout(NSArray *subviews) {
-    for (UIView *view in subviews) {
-        if (view.dll_layout.layoutValue.hasLayout) {
-            view.dll_layout.layoutValue.hasLayout = NO;
-            dll_setupSubviewsHasNotLayout(view.subviews);
-        }
-    }
-}
-
-void dll_resetViewFrame(UIView *view) {
-    DLLLayoutValue *value = view.dll_layout.layoutValue;
-    if (value.flag == 0 || value.hasLayout) {
-        return;
-    }
-    
-    DLLLayoutRelativeViews relativeViews = value.relativeViews;
-    if (relativeViews.view1) {
-        dll_resetViewFrame((__bridge UIView *)relativeViews.view1);
-    }
-    if (relativeViews.view2) {
-        dll_resetViewFrame((__bridge UIView *)relativeViews.view2);
-    }
-    if (relativeViews.view3) {
-        dll_resetViewFrame((__bridge UIView *)relativeViews.view3);
-    }
-    if (relativeViews.view4) {
-        dll_resetViewFrame((__bridge UIView *)relativeViews.view4);
-    }
-    view.frame = [value frameForView:view];
-    value.hasLayout = YES;
-}
-
-void dll_layoutSubviewsRecursively(NSArray *subviews) {
-    dll_setupSubviewsHasNotLayout(subviews);
-    for (UIView *view in subviews) {
-        dll_resetViewFrame(view);
-        dll_layoutSubviewsRecursively(view.subviews);
-    }
-}
-
-
-void dll_layoutSubviews(NSArray *subviews) {
-    dll_setupSubviewsHasNotLayout(subviews);
-    for (UIView *view in subviews) {
-        dll_resetViewFrame(view);
-    }
-}
-
-void dll_removeViewConstraints(UIView *view) {
-    view.autoresizingMask = UIViewAutoresizingNone;
-    view.translatesAutoresizingMaskIntoConstraints = YES;
-    NSArray *subviews = view.subviews;
-    for (UIView *view in subviews) {
-        dll_removeViewConstraints(view);
-    }
-}
-
-void dll_swizzleMethod(Class class, SEL origin, SEL target) {
-    Method originMethod = class_getInstanceMethod(class, origin);
-    Method targetMethod = class_getInstanceMethod(class, target);
-    method_exchangeImplementations(originMethod, targetMethod);
-}
 
 @implementation UIView (DLLLayout)
 
@@ -81,22 +19,34 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
     dll_swizzleMethod(self, @selector(layoutSubviews), @selector(dll_layoutSubviews));
 }
 
++ (void)initialize {
+    dll_swizzleMethod(self, @selector(invalidateIntrinsicContentSize), @selector(dll_invalidateIntrinsicContentSize));
+}
 
 - (void)dll_layoutSubviews {
     NSArray *subviews = self.subviews;
-    if (self.dll_layout.layoutValue.flag) {
+    if (self.dll_layout.flag) {
         dll_removeViewConstraints(self);
     }
     dll_layoutSubviews(subviews);
     [self dll_layoutSubviews];
 }
 
+- (void)dll_invalidateIntrinsicContentSize {
+    [self dll_invalidateIntrinsicContentSize];
+    [self.dll_layout setNeedsUpdateContentSize];
+}
 
 #pragma mark - dll layout
+
+- (DLLLayout *)dll_layout {
+    return objc_getAssociatedObject(self, @selector(dll_layout));
+}
+
 - (void)dll_setLayout:(void (^)(DLLLayout *))layout {
     NSAssert(layout, @"layout can not be nil.");
     DLLLayout *layoutObj = [self dll_getLayout];
-    layoutObj.layoutValue.flag = 0;
+    layoutObj.flag = 0;
     layout(layoutObj);
 }
 
@@ -110,6 +60,7 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
     DLLLayout *layout = [self dll_layout];
     if (layout == nil) {
         layout = [[DLLLayout alloc] init];
+        layout.view = self;
         objc_setAssociatedObject(self, @selector(dll_layout), layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return layout;
@@ -117,18 +68,17 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
 
 
 - (void)dll_updateFrame {
-    self.dll_layout.layoutValue.hasLayout = NO;
-    
-    DLLLayoutValue *superValue = self.superview.dll_layout.layoutValue;
+    self.dll_layout.hasLayout = NO;
+    DLLLayout *superValue = self.superview.dll_layout;
     if (superValue.flag) {
-        DLLLayoutRelativeViews superRelativeViews = superValue.relativeViews;
+        DLLLayoutRelativeViews superRelativeViewsX = superValue.relativeViewsX;
+        DLLLayoutRelativeViews superRelativeViewsY = superValue.relativeViewsY;
         void *pView = (__bridge void *)self;
-        if ((superRelativeViews.view1 == pView || superRelativeViews.view2 == pView || superRelativeViews.view3 == pView || superRelativeViews.view4 == pView) && superValue.hasLayout) {
+        if ((superRelativeViewsX.view1 == pView || superRelativeViewsX.view2 == pView || superRelativeViewsY.view1 == pView || superRelativeViewsY.view2 == pView) && superValue.hasLayout) {
             [self.superview dll_updateFrame];
             return;
         }
     }
-    
     dll_resetViewFrame(self);
     [self setNeedsLayout];
     [self layoutIfNeeded];
@@ -136,11 +86,11 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
 
 
 - (void)dll_removeAllFlags {
-    self.dll_layout.layoutValue.flag = 0;
+    self.dll_layout.flag = 0;
 }
 
 - (void)dll_removeLayoutFlag:(DLLLayoutFlag)flag {
-    self.dll_layout.layoutValue.flag &= ~flag;
+    self.dll_layout.flag &= ~flag;
 }
 
 
@@ -178,3 +128,5 @@ void dll_swizzleMethod(Class class, SEL origin, SEL target) {
 }
 
 @end
+
+

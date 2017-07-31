@@ -1,5 +1,5 @@
 //
-//  DLLLayoutRule.h
+//  DLLLayoutStructs.h
 //  Pods
 //
 //  Created by DLL on 2017/7/19.
@@ -9,17 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "DLLLayoutDefine.h"
 
+extern const CGSize CGSizeUnknown;
 
+BOOL CGSizeIsUnknown(CGSize size);
 
-struct DLLLayoutFrame {
+struct DLLLayoutAxisFrame {
     CGFloat origin;
     CGFloat value;
 };
 
-typedef struct DLLLayoutFrame DLLLayoutFrame;
+typedef struct DLLLayoutAxisFrame DLLLayoutAxisFrame;
 
 
-
+typedef NS_ENUM(NSUInteger, DLLLayoutAxis) {
+    DLLLayoutAxisX = 0,
+    DLLLayoutAxisY = 1
+};
 
 
 typedef NS_ENUM(NSUInteger, DLLLayoutRuleType) {
@@ -60,12 +65,12 @@ typedef struct DLLLayoutRuleGroup DLLLayoutRuleGroup;
 
 struct DLLLayoutRelativeViews {
     void *view1;
+    DLLLayoutAxis view1Axis;
     void *view2;
-    void *view3;
-    void *view4;
+    DLLLayoutAxis view2Axis;
 };
 typedef struct DLLLayoutRelativeViews DLLLayoutRelativeViews;
 
 BOOL DLLLayoutRuleFlagIsNeedToCalculateValue(DLLLayoutRuleFlag flag);
 
-DLLLayoutFrame DLLLayoutFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutFrame frame, CGFloat max, UIView *view);
+DLLLayoutAxisFrame DLLLayoutAxisFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutAxisFrame frame, CGFloat max, UIView *view);

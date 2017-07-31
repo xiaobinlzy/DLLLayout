@@ -91,7 +91,6 @@
 - (DLLLayout *)layoutWithRelative:(DLLLayoutRelative)relative offset:(CGFloat)offset multi:(CGFloat)multi {
     
     DLLLayout *layout = self.layout;
-    DLLLayoutValue *layoutValue = layout.layoutValue;
     
     DLLLayoutRule rule;
     rule.type = DLLLayoutRuleTypeRelative;
@@ -102,66 +101,66 @@
     
     switch (self.type) {
         case DLLRelativeLeft: {
-            DLLLayoutRuleGroup rules = layoutValue.xRules;
+            DLLLayoutRuleGroup rules = layout.xRules;
             rules.head = rule;
-            layoutValue.xRules = rules;
-            layoutValue.flag |= DLLLayoutFlagLeftMargin;
+            layout.xRules = rules;
+            layout.flag |= DLLLayoutFlagLeftMargin;
         }
             break;
             
         case DLLRelativeWidth: {
-            DLLLayoutRuleGroup rules = layoutValue.xRules;
+            DLLLayoutRuleGroup rules = layout.xRules;
             rules.value = rule;
-            layoutValue.xRules = rules;
-            layoutValue.flag |= DLLLayoutFlagWidth;
+            layout.xRules = rules;
+            layout.flag |= DLLLayoutFlagWidth;
         }
             break;
             
         case DLLRelativeRight: {
-            DLLLayoutRuleGroup rules = layoutValue.xRules;
+            DLLLayoutRuleGroup rules = layout.xRules;
             rules.tail = rule;
-            layoutValue.xRules = rules;
-            layoutValue.flag |= DLLLayoutFlagRightMargin;
+            layout.xRules = rules;
+            layout.flag |= DLLLayoutFlagRightMargin;
         }
             break;
             
         case DLLRelativeCenterX: {
-            DLLLayoutRuleGroup rules = layoutValue.xRules;
+            DLLLayoutRuleGroup rules = layout.xRules;
             rules.center = rule;
-            layoutValue.xRules = rules;
-            layoutValue.flag |= DLLLayoutFlagCenterX;
+            layout.xRules = rules;
+            layout.flag |= DLLLayoutFlagCenterX;
         }
             break;
             
         case DLLRelativeTop: {
-            DLLLayoutRuleGroup rules = layoutValue.yRules;
+            DLLLayoutRuleGroup rules = layout.yRules;
             rules.head = rule;
-            layoutValue.yRules = rules;
-            layoutValue.flag |= DLLLayoutFlagTopMargin;
+            layout.yRules = rules;
+            layout.flag |= DLLLayoutFlagTopMargin;
         }
             break;
             
         case DLLRelativeHeight: {
-            DLLLayoutRuleGroup rules = layoutValue.yRules;
+            DLLLayoutRuleGroup rules = layout.yRules;
             rules.value = rule;
-            layoutValue.yRules = rules;
-            layoutValue.flag |= DLLLayoutFlagHeight;
+            layout.yRules = rules;
+            layout.flag |= DLLLayoutFlagHeight;
         }
             break;
             
         case DLLRelativeBottom: {
-            DLLLayoutRuleGroup rules = layoutValue.yRules;
+            DLLLayoutRuleGroup rules = layout.yRules;
             rules.tail = rule;
-            layoutValue.yRules = rules;
-            layoutValue.flag |= DLLLayoutFlagBottomMargin;
+            layout.yRules = rules;
+            layout.flag |= DLLLayoutFlagBottomMargin;
         }
             break;
             
         case DLLRelativeCenterY: {
-            DLLLayoutRuleGroup rules = layoutValue.yRules;
+            DLLLayoutRuleGroup rules = layout.yRules;
             rules.center = rule;
-            layoutValue.yRules = rules;
-            layoutValue.flag |= DLLLayoutFlagCenterY;
+            layout.yRules = rules;
+            layout.flag |= DLLLayoutFlagCenterY;
         }
             break;
             

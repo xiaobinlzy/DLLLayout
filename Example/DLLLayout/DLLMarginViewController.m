@@ -14,6 +14,10 @@
 @end
 
 @implementation DLLMarginViewController {
+    CGFloat _leftMargin;
+    CGFloat _rightMargin;
+    CGFloat _topMargin;
+    CGFloat _bottomMargin;
 }
 
 - (void)viewDidLoad {
@@ -21,14 +25,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"请横竖屏切换";
     
-    UILabel *label = [[UILabel alloc] init];
-    label.text = @"上下边距为50 左右边距100";
-    [label dll_setLayout:^(DLLLayout *layout) {
-        layout.centerX(0)
-        .topMargin(00)
-        .height(50);
-    }];
-    [self.view addSubview:label];
     
     UIView *exampleView = [[UIView alloc] init];
     exampleView.backgroundColor = [UIColor redColor];

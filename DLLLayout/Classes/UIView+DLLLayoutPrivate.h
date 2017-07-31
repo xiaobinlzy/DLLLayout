@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DLLLayout.h"
+#import "DLLLayout+Private.h"
 
 @interface UIView (DLLLayoutPrivate)
 

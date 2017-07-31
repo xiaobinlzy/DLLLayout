@@ -7,7 +7,8 @@
 //
 
 #import "DLLAppDelegate.h"
-#import "DLLViewController.h"
+#import "DLLMainViewController.h"
+#import "DLLTestViewController.h"
 
 @implementation DLLAppDelegate {
 }
@@ -16,7 +17,7 @@
 {
     self.window = [[UIWindow alloc] init];
     
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[DLLViewController alloc] init]];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[DLLTestViewController alloc] init]];
     controller.navigationBar.translucent = NO;
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];

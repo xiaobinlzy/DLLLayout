@@ -6,9 +6,17 @@
 //
 //
 
-#import "DLLLayoutRule.h"
+#import "DLLLayoutStructs.h"
 #import "UIView+DLLLayoutPrivate.h"
 #import "DLLLayout+Private.h"
+
+const CGSize CGSizeUnknown = {CGFLOAT_MAX, CGFLOAT_MAX};
+
+BOOL CGSizeIsUnknown(CGSize size) {
+    return size.width == CGFLOAT_MAX && size.height == CGFLOAT_MAX;
+}
+
+
 
 CGFloat DLLLayoutRuleValue(DLLLayoutRule rule) {
     switch (rule.type) {
@@ -62,7 +70,7 @@ BOOL DLLLayoutRuleFlagIsNeedToCalculateValue(DLLLayoutRuleFlag flag) {
 }
 
 
-DLLLayoutFrame DLLLayoutFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutFrame frame, CGFloat max, UIView *view) {
+DLLLayoutAxisFrame DLLLayoutAxisFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutAxisFrame frame, CGFloat max, UIView *view) {
     switch ((int)rules.flag) {
         case DLLLayoutRuleFlagValue | DLLLayoutRuleFlagHead:
             frame.value = DLLLayoutRuleValue(rules.value);
@@ -154,7 +162,7 @@ DLLLayoutFrame DLLLayoutFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutFr
             break;
             
         default: {
-            DLLLayoutFlag flag = view.dll_layout.layoutValue.flag;
+            DLLLayoutFlag flag = view.dll_layout.flag;
             NSMutableString *flags = [[NSMutableString alloc] init];
             if (flag & DLLLayoutFlagWidth) {
                 [flags appendString:@" Width "];
@@ -186,6 +194,8 @@ DLLLayoutFrame DLLLayoutFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutFr
         }
             break;
     }
-    
+    if (frame.value < 0) {
+        frame.value = 0;
+    }
     return frame;
 }

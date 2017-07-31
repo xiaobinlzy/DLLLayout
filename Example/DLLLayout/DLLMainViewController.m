@@ -1,5 +1,5 @@
 //
-//  DLLViewController.m
+//  DLLMainViewController.m
 //  DLLLayout
 //
 //  Created by xiaobinlzy on 07/18/2017.
@@ -7,18 +7,18 @@
 //
 
 
-#import "DLLViewController.h"
+#import "DLLMainViewController.h"
 #import <DLLLayout/DLLLayout.h>
 #import "DLLTableViewCell.h"
 #import "DLLMarginViewController.h"
 #import "DLLCenterViewController.h"
 
 
-@interface DLLViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface DLLMainViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
-@implementation DLLViewController {
+@implementation DLLMainViewController {
     UITableView *_tableView;
     NSArray *_data;
 }

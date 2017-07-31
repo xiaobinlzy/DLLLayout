@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E66A9771F2F205700847823 /* DLLTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E66A9761F2F205700847823 /* DLLTestViewController.m */; };
 		4E71AC361F2B34470054A774 /* DLLMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71AC351F2B34470054A774 /* DLLMarginViewController.m */; };
 		4E71AC391F2B39440054A774 /* DLLCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71AC381F2B39440054A774 /* DLLCenterViewController.m */; };
+		4E7272131F2F34FF00B402BA /* DLLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7272121F2F34FF00B402BA /* DLLLabel.m */; };
 		4EB195771F2A29BC0049E6D8 /* DLLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -16,7 +18,7 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* DLLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* DLLAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* DLLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* DLLViewController.m */; };
+		6003F5A7195388D20070C39A /* DLLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* DLLMainViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -42,10 +44,14 @@
 		107E18ACB96CF1BF35564A44 /* DLLLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DLLLayout.podspec; path = ../DLLLayout.podspec; sourceTree = "<group>"; };
 		30B01C79F5C29B9852DA630E /* Pods-DLLLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLLLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLLLayout_Tests/Pods-DLLLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		3E7B6C8D18C121B324C55C49 /* Pods-DLLLayout_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLLLayout_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLLLayout_Example/Pods-DLLLayout_Example.release.xcconfig"; sourceTree = "<group>"; };
+		4E66A9751F2F205700847823 /* DLLTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLTestViewController.h; sourceTree = "<group>"; };
+		4E66A9761F2F205700847823 /* DLLTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLTestViewController.m; sourceTree = "<group>"; };
 		4E71AC341F2B34470054A774 /* DLLMarginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLMarginViewController.h; sourceTree = "<group>"; };
 		4E71AC351F2B34470054A774 /* DLLMarginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLMarginViewController.m; sourceTree = "<group>"; };
 		4E71AC371F2B39440054A774 /* DLLCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLCenterViewController.h; sourceTree = "<group>"; };
 		4E71AC381F2B39440054A774 /* DLLCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLCenterViewController.m; sourceTree = "<group>"; };
+		4E7272111F2F34FF00B402BA /* DLLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLLabel.h; sourceTree = "<group>"; };
+		4E7272121F2F34FF00B402BA /* DLLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLLabel.m; sourceTree = "<group>"; };
 		4EB195751F2A29BC0049E6D8 /* DLLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLTableViewCell.h; sourceTree = "<group>"; };
 		4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLTableViewCell.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* DLLLayout_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLLLayout_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,8 +64,8 @@
 		6003F59B195388D20070C39A /* DLLLayout-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DLLLayout-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* DLLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLLAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* DLLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLLAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* DLLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLLViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* DLLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLLViewController.m; sourceTree = "<group>"; };
+		6003F5A5195388D20070C39A /* DLLMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLLMainViewController.h; sourceTree = "<group>"; };
+		6003F5A6195388D20070C39A /* DLLMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLLMainViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* DLLLayout_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DLLLayout_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -152,14 +158,18 @@
 			children = (
 				6003F59C195388D20070C39A /* DLLAppDelegate.h */,
 				6003F59D195388D20070C39A /* DLLAppDelegate.m */,
-				6003F5A5195388D20070C39A /* DLLViewController.h */,
-				6003F5A6195388D20070C39A /* DLLViewController.m */,
+				6003F5A5195388D20070C39A /* DLLMainViewController.h */,
+				6003F5A6195388D20070C39A /* DLLMainViewController.m */,
 				4EB195751F2A29BC0049E6D8 /* DLLTableViewCell.h */,
 				4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */,
 				4E71AC341F2B34470054A774 /* DLLMarginViewController.h */,
 				4E71AC351F2B34470054A774 /* DLLMarginViewController.m */,
 				4E71AC371F2B39440054A774 /* DLLCenterViewController.h */,
 				4E71AC381F2B39440054A774 /* DLLCenterViewController.m */,
+				4E66A9751F2F205700847823 /* DLLTestViewController.h */,
+				4E66A9761F2F205700847823 /* DLLTestViewController.m */,
+				4E7272111F2F34FF00B402BA /* DLLLabel.h */,
+				4E7272121F2F34FF00B402BA /* DLLLabel.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -409,11 +419,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EB195771F2A29BC0049E6D8 /* DLLTableViewCell.m in Sources */,
+				4E7272131F2F34FF00B402BA /* DLLLabel.m in Sources */,
 				6003F59E195388D20070C39A /* DLLAppDelegate.m in Sources */,
 				4E71AC391F2B39440054A774 /* DLLCenterViewController.m in Sources */,
-				6003F5A7195388D20070C39A /* DLLViewController.m in Sources */,
+				6003F5A7195388D20070C39A /* DLLMainViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				4E71AC361F2B34470054A774 /* DLLMarginViewController.m in Sources */,
+				4E66A9771F2F205700847823 /* DLLTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

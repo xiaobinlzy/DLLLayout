@@ -1,5 +1,5 @@
 //
-//  DLLViewController.h
+//  DLLMainViewController.h
 //  DLLLayout
 //
 //  Created by xiaobinlzy on 07/18/2017.
@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface DLLViewController : UIViewController
+@interface DLLMainViewController : UIViewController
 
 @end
