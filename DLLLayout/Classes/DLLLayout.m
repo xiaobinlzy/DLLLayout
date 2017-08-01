@@ -141,9 +141,6 @@ static int const DLLCalculatingLayoutY = 1 << 8;
         case DLLLayoutAxisX:
             axisFrame.origin = frame.origin.x;
             axisFrame.value = frame.size.width;
-            if (!self.needsLayoutX) {
-                return axisFrame;
-            }
             relativeViews = self.relativeViewsX;
             rules = self.xRules;
             break;
@@ -151,13 +148,14 @@ static int const DLLCalculatingLayoutY = 1 << 8;
         case DLLLayoutAxisY:
             axisFrame.origin = frame.origin.y;
             axisFrame.value = frame.size.height;
-            if (!self.needsLayoutY) {
-                return axisFrame;
-            }
             relativeViews = self.relativeViewsY;
             rules = self.yRules;
             break;
     }
+    if (![self needsLayoutForAxis:axis]) {
+        return axisFrame;
+    }
+    
     int relativeViewEstimated = 0;
     if (relativeViews.view1 && ![self isCalculatingRelative:0 forAxis:axis]) {
         UIView *view = (__bridge UIView *)relativeViews.view1;
@@ -221,8 +219,6 @@ static int const DLLCalculatingLayoutY = 1 << 8;
     
     frame = _view.frame;
     
-    BOOL isCalculatingRelative = [self isCalculatingRelative:0 forAxis:axis] || [self isCalculatingRelative:1 forAxis:axis];
-    BOOL isEstimated = relativeViewEstimated != 0 || isCalculatingRelative;
     switch (axis) {
         case DLLLayoutAxisX:
             frame.origin.x = axisFrame.origin;
@@ -235,23 +231,27 @@ static int const DLLCalculatingLayoutY = 1 << 8;
             break;
     }
     _view.frame = frame;
-    axisFrame.isEstimated = isEstimated;
     
-    if (!isCalculatingRelative) {
+    BOOL isCalculatingRelative = [self isCalculatingRelative:0 forAxis:axis] || [self isCalculatingRelative:1 forAxis:axis];
+    axisFrame.isEstimated = isCalculatingRelative || relativeViewEstimated != 0;
+
+    if (isCalculatingRelative || relativeViewEstimated == 0) {
+        [self setNeedsLayout:NO forAxis:axis];
+    }
+    
+    if (!isCalculatingRelative && ![self needsLayoutForAxis:axis] && relativeViewEstimated) {
         
         if (relativeViewEstimated & 1) {
             UIView *view = (__bridge UIView *)relativeViews.view1;
-            [view.dll_layout setNeedsLayout:YES forAxis:axis];
             [view.dll_layout axisFrameForAxis:relativeViews.view1Axis];
         }
-        if (relativeViewEstimated & 1 << 1) {
+        if (relativeViewEstimated & (1 << 1)) {
             UIView *view = (__bridge UIView *)relativeViews.view2;
-            [view.dll_layout setNeedsLayout:YES forAxis:axis];
             [view.dll_layout axisFrameForAxis:relativeViews.view2Axis];
         }
         
-        [self setNeedsLayout:NO forAxis:axis];
     }
+    
     
     return axisFrame;
 }
