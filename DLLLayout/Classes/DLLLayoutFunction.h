@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-void dll_setupSubviewsHasNotLayout(NSArray *subviews);
 
 void dll_resetViewFrame(UIView *view);
 
-void dll_layoutSubviewsRecursively(NSArray *subviews);
+void dll_layoutSubviewsRecursively(UIView *view);
 
-void dll_layoutSubviews(NSArray *subviews);
+void dll_layoutSubviews(UIView *view);
 
 void dll_removeViewConstraints(UIView *view);
 

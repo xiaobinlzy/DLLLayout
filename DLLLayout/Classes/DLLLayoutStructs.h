@@ -16,6 +16,7 @@ BOOL CGSizeIsUnknown(CGSize size);
 struct DLLLayoutAxisFrame {
     CGFloat origin;
     CGFloat value;
+    BOOL isEstimated;
 };
 
 typedef struct DLLLayoutAxisFrame DLLLayoutAxisFrame;

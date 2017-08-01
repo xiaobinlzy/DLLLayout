@@ -10,21 +10,12 @@
 #import "UIView+DLLLayoutPrivate.h"
 #import <objc/runtime.h>
 
-void dll_setupSubviewsHasNotLayout(NSArray *subviews) {
-    for (UIView *view in subviews) {
-        if (view.dll_layout.hasLayout) {
-            view.dll_layout.hasLayout = NO;
-            dll_setupSubviewsHasNotLayout(view.subviews);
-        }
-    }
-}
-
 
 
 
 void dll_resetViewFrame(UIView *view) {
     DLLLayout *value = view.dll_layout;
-    if (value.flag == 0 || value.hasLayout) {
+    if (value.flag == 0 || !value.needsLayout) {
         return;
     }
     
@@ -35,17 +26,23 @@ void dll_resetViewFrame(UIView *view) {
 
 
 
-void dll_layoutSubviewsRecursively(NSArray *subviews) {
-    dll_setupSubviewsHasNotLayout(subviews);
+void dll_layoutSubviewsRecursively(UIView *view) {
+    NSArray *subviews = view.subviews;
+    for (UIView *view in subviews) {
+        view.dll_layout.needsLayout = YES;
+    }
     for (UIView *view in subviews) {
         dll_resetViewFrame(view);
-        dll_layoutSubviewsRecursively(view.subviews);
+        dll_layoutSubviewsRecursively(view);
     }
 }
 
 
-void dll_layoutSubviews(NSArray *subviews) {
-    dll_setupSubviewsHasNotLayout(subviews);
+void dll_layoutSubviews(UIView *view) {
+    NSArray *subviews = view.subviews;
+    for (UIView *view in subviews) {
+        view.dll_layout.needsLayout = YES;
+    }
     for (UIView *view in subviews) {
         dll_resetViewFrame(view);
     }
@@ -54,10 +51,10 @@ void dll_layoutSubviews(NSArray *subviews) {
 void dll_removeViewConstraints(UIView *view) {
     view.autoresizingMask = UIViewAutoresizingNone;
     view.translatesAutoresizingMaskIntoConstraints = YES;
-    NSArray *subviews = view.subviews;
-    for (UIView *view in subviews) {
-        dll_removeViewConstraints(view);
-    }
+//    NSArray *subviews = view.subviews;
+//    for (UIView *view in subviews) {
+//        dll_removeViewConstraints(view);
+//    }
 }
 
 void dll_swizzleMethod(Class class, SEL origin, SEL target) {

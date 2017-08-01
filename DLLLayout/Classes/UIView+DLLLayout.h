@@ -17,14 +17,14 @@
 
  @param layout 布局规则
  */
-- (void)dll_setLayout:(void(^)(DLLLayout *layout))layout;
+- (DLLLayoutFlag)dll_setLayout:(void(^)(DLLLayout *layout))layout;
 
 /**
  给UIView更新布局规则，这个方法不会清空之前的布局规则，而是在之前的基础上修改。
 
  @param layout 布局规则
  */
-- (void)dll_updateLayout:(void(^)(DLLLayout *layout))layout;
+- (DLLLayoutFlag)dll_updateLayout:(void(^)(DLLLayout *layout))layout;
 
 
 /**
@@ -37,7 +37,7 @@
 
  @param flag 要移除的边的Flag
  */
-- (void)dll_removeLayoutFlag:(DLLLayoutFlag)flag;
+- (DLLLayoutFlag)dll_removeLayoutFlag:(DLLLayoutFlag)flag;
 
 /**
  移除所有边的布局规则
@@ -83,5 +83,6 @@
  依赖属性，依赖y轴中点。
  */
 @property (readonly, nonatomic) DLLLayoutRelative dll_centerY;
+
 
 @end

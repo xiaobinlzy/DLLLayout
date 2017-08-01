@@ -18,11 +18,15 @@
 
 @property (assign, nonatomic) DLLLayoutRuleGroup yRules;
 
-@property (assign, nonatomic) BOOL hasLayoutX;
+@property (assign, nonatomic) BOOL needsLayout;
 
-@property (assign, nonatomic) BOOL hasLayoutY;
+- (void)setCalculating:(BOOL)calculating relative:(int)index forAxis:(DLLLayoutAxis)axis;
 
-@property (assign, nonatomic) BOOL hasLayout;
+- (BOOL)isCalculatingRelative:(int)index forAxis:(DLLLayoutAxis)axis;
+
+- (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis;
+
+- (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis;
 
 @property (assign, nonatomic) UIView *view;
 
@@ -30,8 +34,11 @@
 
 @property (readonly, nonatomic) DLLLayoutRelativeViews relativeViewsY;
 
+
+
 - (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis;
 
 - (void)setNeedsUpdateContentSize;
+
 
 @end
