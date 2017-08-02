@@ -24,9 +24,16 @@
 
 - (BOOL)isCalculatingRelative:(int)index forAxis:(DLLLayoutAxis)axis;
 
+- (BOOL)isCalculatingRelativeForAxis:(DLLLayoutAxis)axis;
+
 - (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis;
 
 - (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis;
+
+- (BOOL)hasEstimatedForAxis:(DLLLayoutAxis)axis;
+
+- (void)setHasEstimated:(BOOL)estimated forAxis:(DLLLayoutAxis)axis;
+
 
 @property (assign, nonatomic) UIView *view;
 
@@ -36,7 +43,7 @@
 
 
 
-- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis;
+- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis force:(BOOL)force;
 
 - (void)setNeedsUpdateContentSize;
 

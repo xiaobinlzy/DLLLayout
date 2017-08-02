@@ -37,6 +37,7 @@ struct DLLLayoutRule {
     DLLLayoutRuleType type;
     CGFloat value;
     CGFloat multi;
+    CGFloat offset;
     void *relativeView;
     DLLLayoutRelativeType relativeType;
 };

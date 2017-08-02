@@ -44,6 +44,6 @@
 
 @property (nonatomic, readonly) DLLLayout *(^withMulti)(DLLLayoutRelative relative, CGFloat multi);
 
-@property (nonatomic, readonly) DLLLayout *(^with)(DLLLayoutRelative relative, CGFloat multi, CGFloat offset);
+@property (nonatomic, readonly) DLLLayout *(^with)(DLLLayoutRelative relative, CGFloat value, CGFloat multi, CGFloat offset);
 
 @end

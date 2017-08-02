@@ -15,12 +15,16 @@
 
 void dll_resetViewFrame(UIView *view) {
     DLLLayout *value = view.dll_layout;
+    if (view.superview.dll_layout == nil) {
+        [value setNeedsLayout:YES];
+    }
+    
     if (value.flag == 0 || !value.needsLayout) {
         return;
     }
     
-    [value axisFrameForAxis:DLLLayoutAxisX];
-    [value axisFrameForAxis:DLLLayoutAxisY];
+    [value axisFrameForAxis:DLLLayoutAxisX force:NO];
+    [value axisFrameForAxis:DLLLayoutAxisY force:NO];
 }
 
 

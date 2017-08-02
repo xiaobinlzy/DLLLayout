@@ -17,8 +17,10 @@ static int const DLLNeedsLayoutX = 1 << 0;
 static int const DLLNeedsLayoutY = 1 << 1;
 
 static int const DLLCalculatingLayoutX = 1 << 4;
+static int const DLLCalculatingLayoutY = 1 << 6;
 
-static int const DLLCalculatingLayoutY = 1 << 8;
+static int const DLLHasEstimatedLayoutX = 1 << 8;
+static int const DLLHasEstimatedLayoutY = 1 << 9;
 
 @implementation DLLLayout {
     int _calculateLayoutFlag;
@@ -131,7 +133,7 @@ static int const DLLCalculatingLayoutY = 1 << 8;
 }
 
 #pragma mark - layout
-- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis {
+- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis force:(BOOL)force {
     CGRect frame = _view.frame;
     DLLLayoutAxisFrame axisFrame = {0, 0, NO};
     DLLLayoutRelativeViews relativeViews;
@@ -152,21 +154,25 @@ static int const DLLCalculatingLayoutY = 1 << 8;
             rules = self.yRules;
             break;
     }
-    if (![self needsLayoutForAxis:axis]) {
+    if (![self needsLayoutForAxis:axis] && !force) {
         return axisFrame;
     }
     
     int relativeViewEstimated = 0;
+    if (![self isCalculatingRelativeForAxis:axis]) {
+        [self setHasEstimated:NO forAxis:axis];
+    }
+    
     if (relativeViews.view1 && ![self isCalculatingRelative:0 forAxis:axis]) {
         UIView *view = (__bridge UIView *)relativeViews.view1;
         [self setCalculating:YES relative:0 forAxis:axis];
-        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view1Axis].isEstimated ? (1 << 0) : 0;
+        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view1Axis force:NO].isEstimated ? (1 << 0) : 0;
         [self setCalculating:NO relative:0 forAxis:axis];
     }
     if (relativeViews.view2 && ![self isCalculatingRelative:1 forAxis:axis]) {
         UIView *view = (__bridge UIView *)relativeViews.view2;
         [self setCalculating:YES relative:1 forAxis:axis];
-        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view2Axis].isEstimated ? (1 << 1) : 0;
+        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view2Axis force:NO].isEstimated ? (1 << 1) : 0;
         [self setCalculating:NO relative:1 forAxis:axis];
     }
     
@@ -199,7 +205,7 @@ static int const DLLCalculatingLayoutY = 1 << 8;
         if (DLLLayoutRuleFlagIsNeedToCalculateValue(otherRules.flag)) {
             calculatedSize = [self sizeThatFitsValue:CGFLOAT_MAX axis:axis];
         } else {
-            calculatedSize = [self sizeThatFitsValue:[self axisFrameForAxis:!axis].value axis:axis];
+            calculatedSize = [self sizeThatFitsValue:[self axisFrameForAxis:!axis force:NO].value axis:axis];
         }
         switch (axis) {
             case DLLLayoutAxisX:
@@ -215,8 +221,15 @@ static int const DLLCalculatingLayoutY = 1 << 8;
         rules.flag |= DLLLayoutRuleFlagValue;
         
     }
-    axisFrame = DLLLayoutAxisFrameFromRuleGroup(rules, axisFrame, superValue, _view);
     
+    
+    BOOL isEstimated = (relativeViewEstimated != 0 && ![self hasEstimatedForAxis:axis]) || [self isCalculatingRelativeForAxis:axis];
+    
+    CGFloat originValue = axisFrame.value;
+    
+    axisFrame = DLLLayoutAxisFrameFromRuleGroup(rules, axisFrame, superValue, _view);
+    axisFrame.isEstimated = isEstimated;
+
     frame = _view.frame;
     
     switch (axis) {
@@ -232,22 +245,25 @@ static int const DLLCalculatingLayoutY = 1 << 8;
     }
     _view.frame = frame;
     
-    BOOL isCalculatingRelative = [self isCalculatingRelative:0 forAxis:axis] || [self isCalculatingRelative:1 forAxis:axis];
-    axisFrame.isEstimated = isCalculatingRelative || relativeViewEstimated != 0;
-
-    if (isCalculatingRelative || relativeViewEstimated == 0) {
-        [self setNeedsLayout:NO forAxis:axis];
+    if (originValue != axisFrame.value) {
+        NSArray *subviews = _view.subviews;
+        for (UIView *view in subviews) {
+            [view.dll_layout setNeedsLayout:YES];
+        }
     }
     
-    if (!isCalculatingRelative && ![self needsLayoutForAxis:axis] && relativeViewEstimated) {
+    [self setHasEstimated:YES forAxis:axis];
+    [self setNeedsLayout:relativeViewEstimated != 0 && ![self isCalculatingRelativeForAxis:axis] forAxis:axis];
+    
+    if (![self needsLayoutForAxis:axis] && relativeViewEstimated != 0) {
         
         if (relativeViewEstimated & 1) {
             UIView *view = (__bridge UIView *)relativeViews.view1;
-            [view.dll_layout axisFrameForAxis:relativeViews.view1Axis];
+            [view.dll_layout axisFrameForAxis:relativeViews.view1Axis force:YES];
         }
         if (relativeViewEstimated & (1 << 1)) {
             UIView *view = (__bridge UIView *)relativeViews.view2;
-            [view.dll_layout axisFrameForAxis:relativeViews.view2Axis];
+            [view.dll_layout axisFrameForAxis:relativeViews.view2Axis force:YES];
         }
         
     }
@@ -413,6 +429,9 @@ static int const DLLCalculatingLayoutY = 1 << 8;
     return NO;
 }
 
+- (BOOL)isCalculatingRelativeForAxis:(DLLLayoutAxis)axis {
+    return [self isCalculatingRelative:0 forAxis:axis] || [self isCalculatingRelative:1 forAxis:axis];
+}
 
 - (void)setFlag:(DLLLayoutFlag)flag {
     _flag = flag;
@@ -445,5 +464,33 @@ static int const DLLCalculatingLayoutY = 1 << 8;
     return NO;
     
 }
+
+- (BOOL)hasEstimatedForAxis:(DLLLayoutAxis)axis {
+    switch (axis) {
+        case DLLLayoutAxisX:
+            return _calculateLayoutFlag & DLLHasEstimatedLayoutX;
+            
+        case DLLLayoutAxisY:
+            return _calculateLayoutFlag & DLLHasEstimatedLayoutY;
+    }
+}
+
+- (void)setHasEstimated:(BOOL)estimated forAxis:(DLLLayoutAxis)axis {
+    int mask = 0;
+    switch (axis) {
+        case DLLLayoutAxisX:
+            mask = DLLHasEstimatedLayoutX;
+            break;
+        case DLLLayoutAxisY:
+            mask = DLLHasEstimatedLayoutY;
+            break;
+    }
+    if (estimated) {
+        _calculateLayoutFlag |= mask;
+    } else {
+        _calculateLayoutFlag &= ~mask;
+    }
+}
+
 @end
 

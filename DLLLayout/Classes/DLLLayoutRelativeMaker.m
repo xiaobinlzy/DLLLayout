@@ -73,29 +73,30 @@
     if (self) {
         typeof(self) __weak weakSelf = self;
         _to = ^DLLLayout *(DLLLayoutRelative relative) {
-            return [weakSelf layoutWithRelative:relative offset:0 multi:1];
+            return [weakSelf layoutWithRelative:relative offset:0 multi:1 value:0];
         };
         _withOffset = ^DLLLayout *(DLLLayoutRelative relative, CGFloat offset) {
-            return [weakSelf layoutWithRelative:relative offset:offset multi:1];
+            return [weakSelf layoutWithRelative:relative offset:offset multi:1 value:0];
         };
         _withMulti = ^DLLLayout *(DLLLayoutRelative relative, CGFloat multi) {
-            return [weakSelf layoutWithRelative:relative offset:0 multi:multi];
+            return [weakSelf layoutWithRelative:relative offset:0 multi:multi value:0];
         };
-        _with = ^DLLLayout *(DLLLayoutRelative relative, CGFloat multi, CGFloat offset) {
-            return [weakSelf layoutWithRelative:relative offset:offset multi:multi];
+        _with = ^DLLLayout *(DLLLayoutRelative relative, CGFloat value, CGFloat multi, CGFloat offset) {
+            return [weakSelf layoutWithRelative:relative offset:offset multi:multi value:value];
         };
     }
     return self;
 }
 
-- (DLLLayout *)layoutWithRelative:(DLLLayoutRelative)relative offset:(CGFloat)offset multi:(CGFloat)multi {
+- (DLLLayout *)layoutWithRelative:(DLLLayoutRelative)relative offset:(CGFloat)offset multi:(CGFloat)multi value:(CGFloat)value {
     
     DLLLayout *layout = self.layout;
     
     DLLLayoutRule rule;
     rule.type = DLLLayoutRuleTypeRelative;
-    rule.value = offset;
+    rule.value = value;
     rule.multi = multi;
+    rule.offset = offset;
     rule.relativeType = relative.type;
     rule.relativeView = relative.view;
     

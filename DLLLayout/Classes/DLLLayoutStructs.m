@@ -24,32 +24,42 @@ CGFloat DLLLayoutRuleValue(DLLLayoutRule rule) {
             return rule.value;
             
         case DLLLayoutRuleTypeRelative: {
+            CGFloat value = 0;
             CGRect frame = ((__bridge UIView *)rule.relativeView).frame;
             switch (rule.relativeType) {
                 case DLLRelativeLeft:
-                    return CGRectGetMinX(frame) + rule.value;
+                    value = CGRectGetMinX(frame);
+                    break;
                     
                 case DLLRelativeRight:
-                    return CGRectGetMaxX(frame) + rule.value;
+                    value = CGRectGetMaxX(frame);
+                    break;
                     
                 case DLLRelativeWidth:
-                    return CGRectGetWidth(frame) * rule.multi + rule.value;
+                    value = CGRectGetWidth(frame);
+                    break;
                     
                 case DLLRelativeCenterX:
-                    return CGRectGetMidX(frame) + rule.value;
+                    value = CGRectGetMidX(frame);
+                    break;
                     
                 case DLLRelativeTop:
-                    return CGRectGetMinY(frame) + rule.value;
+                    value = CGRectGetMinY(frame);
+                    break;
                     
                 case DLLRelativeBottom:
-                    return CGRectGetMaxY(frame) + rule.value;
+                    value = CGRectGetMaxY(frame);
+                    break;
                     
                 case DLLRelativeHeight:
-                    return CGRectGetHeight(frame) * rule.multi + rule.value;
+                    value = CGRectGetHeight(frame);
+                    break;
                     
                 case DLLRelativeCenterY:
-                    return CGRectGetMidY(frame) + rule.value;
+                    value = CGRectGetMidY(frame);
+                    break;
             }
+            return (value + rule.value) * rule.multi + rule.offset;
         }
             
     }
