@@ -33,8 +33,8 @@ NSString *kHelloWorld = @"Hello world.";
     [outView dll_setLayout:^(DLLLayout *layout) {
         layout.margin(UIEdgeInsetsMake(20, 20, 20, 20));
     }];
-    
     int count = 8;
+    srand((unsigned)time(NULL));
     for (int i = 0; i < count; i++) {
         UIView *innerView = [[UIView alloc] init];
         innerView.backgroundColor = [UIColor colorWithRed:rand()/(double)RAND_MAX green:rand()/(double)RAND_MAX blue:rand()/(double)RAND_MAX alpha:1];
@@ -47,19 +47,14 @@ NSString *kHelloWorld = @"Hello world.";
         
         [view dll_setLayout:^(DLLLayout *layout) {
             layout.relative.width.to(view.dll_height.multiple(2))
+            .relative.height.to(outView.dll_height.regulation(-20).multiple(1.0 / count))
             .centerX(0);
+            
             if (i == 0) {
                 layout.topMargin(10);
             } else {
                 UIView *prevView = outView.subviews[i - 1];
                 layout.relative.top.to(prevView.dll_bottom);
-            }
-            
-            if (i == count - 1) {
-                layout.relative.height.to(outView.dll_height.regulation(-20).multiple(1.0 / count));
-            } else {
-                UIView *nextView = outView.subviews[i + 1];
-                layout.relative.height.to(nextView.dll_height);
             }
         }];
     }

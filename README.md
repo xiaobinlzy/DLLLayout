@@ -65,15 +65,15 @@ pod "DLLLayout"
     
     // leftInnerView的宽度是父视图宽度的0.5倍少15，高度比父视图的高度少20，左边距10，y轴居中
     [leftInnerView dll_setLayout:^(DLLLayout *layout) {
-        layout.relative.width.with(containerView.dll_width, 0.5, -15)
-        .relative.height.withOffset(containerView.dll_height, -20)
+        layout.relative.width.to(containerView.dll_width.multiple(0.5).offset(-15))
+        .relative.height.to(containerView.dll_height.offset(-20))
         .leftMargin(10)
         .centerY(0);
     }];
     
     // leftInnerView的宽度是父视图宽度的0.5倍少15，高度比父视图的高度少20，右边距10，y轴居中
     [rightInnerView dll_setLayout:^(DLLLayout *layout) {
-        layout.relative.width.with(containerView.dll_width, 0.5, -15)
+        layout.relative.width.to(containerView.dll_width.multiple(0.5).offset(-15))
         .relative.height.to(leftInnerView.dll_height)
         .rightMargin(10)
         .centerY(0);
