@@ -18,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"请横竖屏切换";
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"垂直水平居中 宽高200";

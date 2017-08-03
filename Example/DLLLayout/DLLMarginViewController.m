@@ -23,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"请横竖屏切换";
     
     
     UIView *exampleView = [[UIView alloc] init];

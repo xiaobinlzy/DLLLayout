@@ -12,6 +12,8 @@
 #import "DLLTableViewCell.h"
 #import "DLLMarginViewController.h"
 #import "DLLCenterViewController.h"
+#import "DLLListViewController.h"
+#import "DLLCycleRelativeViewController.h"
 
 
 @interface DLLMainViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -28,7 +30,7 @@
     [super viewDidLoad];
     self.title = @"请横竖屏切换";
     
-    _data = @[@"边距", @"居中", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world.", @"Hello world."];
+    _data = @[@"边距", @"居中", @"列表", @"循环依赖"];
     
     _tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
@@ -72,7 +74,12 @@
         case 1:
             viewController = [[DLLCenterViewController alloc] init];
             break;
-        
+        case 2:
+            viewController = [[DLLListViewController alloc] init];
+            break;
+        case 3:
+            viewController = [[DLLCycleRelativeViewController alloc] init];
+            break;
     }
     if (viewController) {
         [self.navigationController pushViewController:viewController animated:YES];

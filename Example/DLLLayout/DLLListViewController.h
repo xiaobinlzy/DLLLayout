@@ -1,5 +1,5 @@
 //
-//  DLLTestViewController.h
+//  DLLListViewController.h
 //  DLLLayout
 //
 //  Created by DLL on 2017/7/31.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DLLTestViewController : UIViewController
+@interface DLLListViewController : UIViewController
 
 @end

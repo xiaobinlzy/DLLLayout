@@ -1,21 +1,21 @@
 //
-//  DLLTestViewController.m
+//  DLLListViewController.m
 //  DLLLayout
 //
 //  Created by DLL on 2017/7/31.
 //  Copyright © 2017年 xiaobinlzy. All rights reserved.
 //
 
-#import "DLLTestViewController.h"
+#import "DLLListViewController.h"
 #import <DLLLayout/DLLLayout.h>
 
 NSString *kHelloWorld = @"Hello world.";
 
-@interface DLLTestViewController ()
+@interface DLLListViewController ()
 
 @end
 
-@implementation DLLTestViewController {
+@implementation DLLListViewController {
     UILabel *_label;
 }
 

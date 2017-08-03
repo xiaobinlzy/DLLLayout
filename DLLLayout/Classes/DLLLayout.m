@@ -241,7 +241,7 @@ static int const DLLEstimatedLayoutY = 1 << 10;
     }
     
     
-    CGFloat originValue = axisFrame.value;
+    DLLLayoutAxisFrame originFrame = axisFrame;
     
     axisFrame = DLLLayoutAxisFrameFromRuleGroup(rules, axisFrame, superValue, _view);
     axisFrame.isEstimated = isEstimated;
@@ -261,12 +261,13 @@ static int const DLLEstimatedLayoutY = 1 << 10;
     }
     _view.frame = frame;
     
-    if (originValue != axisFrame.value) {
+    if (originFrame.value != axisFrame.value) {
         NSArray *subviews = _view.subviews;
         for (UIView *view in subviews) {
             [view.dll_layout setNeedsLayout:YES];
         }
     }
+    
     
     [self setNeedsLayout:layoutEstimate != 0 || [self isCalculatingRelativeForAxis:axis] forAxis:axis];
     
@@ -281,6 +282,24 @@ static int const DLLEstimatedLayoutY = 1 << 10;
             [view.dll_layout axisFrameForAxis:relativeViews.view2Axis];
         }
         
+    }
+    
+    if ((originFrame.value != axisFrame.value || originFrame.origin != axisFrame.origin) && ![self needsLayoutForAxis:axis]) {
+        DLLLayout *superValue = _view.superview.dll_layout;
+        if (superValue.flag) {
+            DLLLayoutRelativeViews superRelativeViewsX = superValue.relativeViewsX;
+            DLLLayoutRelativeViews superRelativeViewsY = superValue.relativeViewsY;
+            void *pView = (__bridge void *)_view;
+            if ((superRelativeViewsX.view1 == pView || superRelativeViewsX.view2 == pView) && ![superValue needsLayoutForAxis:DLLLayoutAxisX]) {
+                [superValue setNeedsLayout:YES forAxis:DLLLayoutAxisX];
+                [superValue axisFrameForAxis:DLLLayoutAxisX];
+            }
+            
+            if ((superRelativeViewsY.view1 == pView || superRelativeViewsY.view2 == pView) && ![superValue needsLayoutForAxis:DLLLayoutAxisY]) {
+                [superValue setNeedsLayout:YES forAxis:DLLLayoutAxisY];
+                [superValue axisFrameForAxis:DLLLayoutAxisY];
+            }
+        }
     }
     
     
