@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DLLLayoutDefine.h"
+#import "DLLLayoutRelative.h"
 
 @class DLLLayout, DLLLayoutRelativeBridge;
 
@@ -38,12 +39,6 @@
 @interface DLLLayoutRelativeBridge : NSObject
 
 
-@property (nonatomic, readonly) DLLLayout *(^to)(DLLLayoutRelative relative);
-
-@property (nonatomic, readonly) DLLLayout *(^withOffset)(DLLLayoutRelative relative, CGFloat offset);
-
-@property (nonatomic, readonly) DLLLayout *(^withMulti)(DLLLayoutRelative relative, CGFloat multi);
-
-@property (nonatomic, readonly) DLLLayout *(^with)(DLLLayoutRelative relative, CGFloat value, CGFloat multi, CGFloat offset);
+@property (nonatomic, readonly) DLLLayout *(^to)(DLLLayoutRelative *relative);
 
 @end

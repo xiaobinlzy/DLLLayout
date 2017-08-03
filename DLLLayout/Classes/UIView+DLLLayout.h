@@ -7,6 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 #import "DLLLayoutDefine.h"
+#import "DLLLayoutRelative.h"
 
 @class DLLLayout;
 
@@ -47,42 +48,42 @@
 /**
  依赖属性，依赖左边。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_left;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_left;
 
 /**
  依赖属性，依赖右边。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_right;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_right;
 
 /**
  依赖属性，依赖顶边。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_top;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_top;
 
 /**
  依赖属性，依赖底边。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_bottom;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_bottom;
 
 /**
  依赖属性，依赖宽度。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_width;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_width;
 
 /**
  依赖属性，依赖高度。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_height;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_height;
 
 /**
  依赖属性，依赖x轴中点。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_centerX;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_centerX;
 
 /**
  依赖属性，依赖y轴中点。
  */
-@property (readonly, nonatomic) DLLLayoutRelative dll_centerY;
+@property (readonly, nonatomic) DLLLayoutRelative *dll_centerY;
 
 
 @end

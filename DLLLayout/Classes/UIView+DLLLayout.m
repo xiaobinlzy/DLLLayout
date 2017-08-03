@@ -10,6 +10,7 @@
 #import "DLLLayout+Private.h"
 #import "UIView+DLLLayoutPrivate.h"
 #import "DLLLayoutFunction.h"
+#import "DLLLayoutRelative+Private.h"
 
 
 @implementation UIView (DLLLayout)
@@ -112,36 +113,61 @@
 
 
 #pragma mark - dll property
-- (DLLLayoutRelative)dll_width {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeWidth};
+- (DLLLayoutRelative *)dll_width {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeWidth;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_height {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeHeight};
+- (DLLLayoutRelative *)dll_height {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeHeight;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_left {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeLeft};
+- (DLLLayoutRelative *)dll_left {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeLeft;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_right {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeRight};
+- (DLLLayoutRelative *)dll_right {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeRight;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_top {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeTop};
+- (DLLLayoutRelative *)dll_top {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeTop;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_bottom {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeBottom};
+- (DLLLayoutRelative *)dll_bottom {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeBottom;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_centerX {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeCenterX};
+- (DLLLayoutRelative *)dll_centerX {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    relative.type = DLLRelativeCenterX;
+    return relative;
 }
 
-- (DLLLayoutRelative)dll_centerY {
-    return (DLLLayoutRelative){(__bridge void *)self, DLLRelativeCenterY};
+- (DLLLayoutRelative *)dll_centerY {
+    DLLLayoutRelative *relative = [[DLLLayoutRelative alloc] init];
+    relative.view = self;
+    
+    relative.type = DLLRelativeCenterY;
+    return relative;
 }
 
 @end

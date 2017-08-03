@@ -23,8 +23,8 @@ void dll_resetViewFrame(UIView *view) {
         return;
     }
     
-    [value axisFrameForAxis:DLLLayoutAxisX force:NO];
-    [value axisFrameForAxis:DLLLayoutAxisY force:NO];
+    [value axisFrameForAxis:DLLLayoutAxisX];
+    [value axisFrameForAxis:DLLLayoutAxisY];
 }
 
 

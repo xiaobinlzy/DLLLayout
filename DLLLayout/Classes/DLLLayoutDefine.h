@@ -39,11 +39,5 @@ typedef NS_ENUM(NSUInteger, DLLLayoutRelativeType) {
 };
 
 
-struct DLLLayoutRelative {
-    void *view;
-    DLLLayoutRelativeType type;
-};
-
-typedef struct DLLLayoutRelative DLLLayoutRelative;
 
 #endif /* DLLLayoutDefine_h */

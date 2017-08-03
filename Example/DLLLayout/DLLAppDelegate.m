@@ -17,8 +17,9 @@
 {
     self.window = [[UIWindow alloc] init];
     
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[DLLTestViewController alloc] init]];
-    controller.navigationBar.translucent = NO;
+//    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:[[DLLTestViewController alloc] init]];
+//    controller.navigationBar.translucent = NO;
+    UIViewController *controller = [[DLLTestViewController alloc] init];
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
     return YES;

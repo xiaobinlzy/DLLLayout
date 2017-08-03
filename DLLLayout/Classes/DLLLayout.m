@@ -19,8 +19,8 @@ static int const DLLNeedsLayoutY = 1 << 1;
 static int const DLLCalculatingLayoutX = 1 << 4;
 static int const DLLCalculatingLayoutY = 1 << 6;
 
-static int const DLLHasEstimatedLayoutX = 1 << 8;
-static int const DLLHasEstimatedLayoutY = 1 << 9;
+static int const DLLEstimatedLayoutX = 1 << 8;
+static int const DLLEstimatedLayoutY = 1 << 10;
 
 @implementation DLLLayout {
     int _calculateLayoutFlag;
@@ -133,7 +133,7 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
 }
 
 #pragma mark - layout
-- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis force:(BOOL)force {
+- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis {
     CGRect frame = _view.frame;
     DLLLayoutAxisFrame axisFrame = {0, 0, NO};
     DLLLayoutRelativeViews relativeViews;
@@ -154,27 +154,35 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
             rules = self.yRules;
             break;
     }
-    if (![self needsLayoutForAxis:axis] && !force) {
+    if (![self needsLayoutForAxis:axis]) {
         return axisFrame;
     }
     
-    int relativeViewEstimated = 0;
-    if (![self isCalculatingRelativeForAxis:axis]) {
-        [self setHasEstimated:NO forAxis:axis];
+    int layoutEstimate = 0;
+    
+    if (relativeViews.view1) {
+        if (![self isCalculatingRelative:0 forAxis:axis]) {
+            UIView *view = (__bridge UIView *)relativeViews.view1;
+            [self setCalculating:YES relative:0 forAxis:axis];
+            layoutEstimate |= [view.dll_layout axisFrameForAxis:relativeViews.view1Axis].isEstimated ? (1 << 0) : 0;
+            [self setCalculating:NO relative:0 forAxis:axis];
+        } else {
+            layoutEstimate |= 1;
+            [self setEstimated:YES relative:0 forAxis:axis];
+        }
+    }
+    if (relativeViews.view2) {
+        if (![self isCalculatingRelative:1 forAxis:axis]) {
+            UIView *view = (__bridge UIView *)relativeViews.view2;
+            [self setCalculating:YES relative:1 forAxis:axis];
+            layoutEstimate |= [view.dll_layout axisFrameForAxis:relativeViews.view2Axis].isEstimated ? (1 << 1) : 0;
+            [self setCalculating:NO relative:1 forAxis:axis];
+        } else {
+            layoutEstimate |= 1 << 1;
+            [self setEstimated:YES relative:1 forAxis:axis];
+        }
     }
     
-    if (relativeViews.view1 && ![self isCalculatingRelative:0 forAxis:axis]) {
-        UIView *view = (__bridge UIView *)relativeViews.view1;
-        [self setCalculating:YES relative:0 forAxis:axis];
-        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view1Axis force:NO].isEstimated ? (1 << 0) : 0;
-        [self setCalculating:NO relative:0 forAxis:axis];
-    }
-    if (relativeViews.view2 && ![self isCalculatingRelative:1 forAxis:axis]) {
-        UIView *view = (__bridge UIView *)relativeViews.view2;
-        [self setCalculating:YES relative:1 forAxis:axis];
-        relativeViewEstimated |= [view.dll_layout axisFrameForAxis:relativeViews.view2Axis force:NO].isEstimated ? (1 << 1) : 0;
-        [self setCalculating:NO relative:1 forAxis:axis];
-    }
     
     CGFloat superValue;
     switch (axis) {
@@ -205,7 +213,7 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
         if (DLLLayoutRuleFlagIsNeedToCalculateValue(otherRules.flag)) {
             calculatedSize = [self sizeThatFitsValue:CGFLOAT_MAX axis:axis];
         } else {
-            calculatedSize = [self sizeThatFitsValue:[self axisFrameForAxis:!axis force:NO].value axis:axis];
+            calculatedSize = [self sizeThatFitsValue:[self axisFrameForAxis:!axis].value axis:axis];
         }
         switch (axis) {
             case DLLLayoutAxisX:
@@ -222,14 +230,22 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
         
     }
     
+    BOOL isEstimated = [self isCalculatingRelativeForAxis:axis];
+    if (!isEstimated) {
+        if ((layoutEstimate & 1) != 0 && ![self hasEstimatedRelative:0 forAxis:axis]) {
+            isEstimated = YES;
+        }
+        if ((layoutEstimate & (1 << 1)) != 0 && ![self hasEstimatedRelative:1 forAxis:axis]) {
+            isEstimated = YES;
+        }
+    }
     
-    BOOL isEstimated = (relativeViewEstimated != 0 && ![self hasEstimatedForAxis:axis]) || [self isCalculatingRelativeForAxis:axis];
     
     CGFloat originValue = axisFrame.value;
     
     axisFrame = DLLLayoutAxisFrameFromRuleGroup(rules, axisFrame, superValue, _view);
     axisFrame.isEstimated = isEstimated;
-
+    
     frame = _view.frame;
     
     switch (axis) {
@@ -252,18 +268,17 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
         }
     }
     
-    [self setHasEstimated:YES forAxis:axis];
-    [self setNeedsLayout:relativeViewEstimated != 0 && ![self isCalculatingRelativeForAxis:axis] forAxis:axis];
+    [self setNeedsLayout:layoutEstimate != 0 || [self isCalculatingRelativeForAxis:axis] forAxis:axis];
     
-    if (![self needsLayoutForAxis:axis] && relativeViewEstimated != 0) {
+    if (![self isCalculatingRelativeForAxis:axis]) {
         
-        if (relativeViewEstimated & 1) {
+        if (layoutEstimate & 1) {
             UIView *view = (__bridge UIView *)relativeViews.view1;
-            [view.dll_layout axisFrameForAxis:relativeViews.view1Axis force:YES];
+            [view.dll_layout axisFrameForAxis:relativeViews.view1Axis];
         }
-        if (relativeViewEstimated & (1 << 1)) {
+        if (layoutEstimate & (1 << 1)) {
             UIView *view = (__bridge UIView *)relativeViews.view2;
-            [view.dll_layout axisFrameForAxis:relativeViews.view2Axis force:YES];
+            [view.dll_layout axisFrameForAxis:relativeViews.view2Axis];
         }
         
     }
@@ -368,37 +383,51 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
 }
 
 #pragma mark - flag
+- (void)setFlag:(DLLLayoutFlag)flag {
+    _flag = flag;
+    _xRules.flag = flag & 0xF;
+    _yRules.flag = (flag & 0xF0) >> 4;
+    self.needsLayout = YES;
+}
+
 - (BOOL)needsLayout {
-    return _calculateLayoutFlag;
+    return [self needsLayoutForAxis:DLLLayoutAxisX] || [self needsLayoutForAxis:DLLLayoutAxisY];
 }
 
 - (void)setNeedsLayout:(BOOL)needsLayout {
-    _calculateLayoutFlag = DLLNeedsLayoutX | DLLNeedsLayoutY;
+    _calculateLayoutFlag = (DLLNeedsLayoutX | DLLNeedsLayoutY);
 }
 
-- (void)setNeedsLayoutX:(BOOL)needsLayoutX {
-    if (needsLayoutX) {
-        _calculateLayoutFlag |= DLLNeedsLayoutX;
+- (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis {
+    int mask = 0;
+    switch (axis) {
+        case DLLLayoutAxisX:
+            mask = DLLNeedsLayoutX;
+            break;
+        case DLLLayoutAxisY:
+            mask = DLLNeedsLayoutY;
+            break;
+    }
+    return _calculateLayoutFlag & mask;
+}
+
+- (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis {
+    int mask = 0;
+    switch (axis) {
+        case DLLLayoutAxisX:
+            mask = DLLNeedsLayoutX;
+            break;
+        case DLLLayoutAxisY:
+            mask = DLLNeedsLayoutY;
+            break;
+    }
+    if (needsLayout) {
+        _calculateLayoutFlag |= mask;
     } else {
-        _calculateLayoutFlag &= ~DLLNeedsLayoutX;
+        _calculateLayoutFlag &= ~mask;
     }
 }
 
-- (BOOL)needsLayoutX {
-    return _calculateLayoutFlag & DLLNeedsLayoutX;
-}
-
-- (void)setNeedsLayoutY:(BOOL)needsLayoutY {
-    if (needsLayoutY) {
-        _calculateLayoutFlag |= DLLNeedsLayoutY;
-    } else {
-        _calculateLayoutFlag &= ~DLLNeedsLayoutY;
-    }
-}
-
-- (BOOL)needsLayoutY {
-    return _calculateLayoutFlag & DLLNeedsLayoutY;
-}
 
 - (void)setCalculating:(BOOL)calculating relative:(int)index forAxis:(DLLLayoutAxis)axis {
     int mask = 0;
@@ -433,64 +462,40 @@ static int const DLLHasEstimatedLayoutY = 1 << 9;
     return [self isCalculatingRelative:0 forAxis:axis] || [self isCalculatingRelative:1 forAxis:axis];
 }
 
-- (void)setFlag:(DLLLayoutFlag)flag {
-    _flag = flag;
-    _xRules.flag = flag & 0xF;
-    _yRules.flag = (flag & 0xF0) >> 4;
-    self.needsLayout = YES;
-}
 
-- (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis {
+
+
+- (BOOL)hasEstimatedRelative:(int)index forAxis:(DLLLayoutAxis)axis {
+    int mask;
     switch (axis) {
         case DLLLayoutAxisX:
-            [self setNeedsLayoutX:needsLayout];
+            mask = DLLEstimatedLayoutX;
+            break;
+        case DLLLayoutAxisY:
+            mask = DLLEstimatedLayoutY;
+            break;
+    }
+    mask = mask << index;
+    return _calculateLayoutFlag & mask;
+}
+
+- (void)setEstimated:(BOOL)estimated relative:(int)index forAxis:(DLLLayoutAxis)axis {
+    int mask;
+    switch (axis) {
+        case DLLLayoutAxisX:
+            mask = DLLEstimatedLayoutX;
             break;
             
         case DLLLayoutAxisY:
-            [self setNeedsLayoutY:needsLayout];
+            mask = DLLEstimatedLayoutY;
             break;
     }
-}
-
-- (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis {
-    switch (axis) {
-        case DLLLayoutAxisX:
-            return _calculateLayoutFlag & DLLNeedsLayoutX;
-            
-        case DLLLayoutAxisY:
-            return _calculateLayoutFlag & DLLNeedsLayoutY;
-            break;
-    }
-    return NO;
-    
-}
-
-- (BOOL)hasEstimatedForAxis:(DLLLayoutAxis)axis {
-    switch (axis) {
-        case DLLLayoutAxisX:
-            return _calculateLayoutFlag & DLLHasEstimatedLayoutX;
-            
-        case DLLLayoutAxisY:
-            return _calculateLayoutFlag & DLLHasEstimatedLayoutY;
-    }
-}
-
-- (void)setHasEstimated:(BOOL)estimated forAxis:(DLLLayoutAxis)axis {
-    int mask = 0;
-    switch (axis) {
-        case DLLLayoutAxisX:
-            mask = DLLHasEstimatedLayoutX;
-            break;
-        case DLLLayoutAxisY:
-            mask = DLLHasEstimatedLayoutY;
-            break;
-    }
+    mask = mask << index;
     if (estimated) {
         _calculateLayoutFlag |= mask;
     } else {
         _calculateLayoutFlag &= ~mask;
     }
 }
-
 @end
 

@@ -25,29 +25,44 @@ NSString *kHelloWorld = @"Hello world.";
     
     
     UIView *outView = [[UIView alloc] init];
-    outView.backgroundColor = [UIColor redColor];
+    outView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:outView];
     
+    
+    
     [outView dll_setLayout:^(DLLLayout *layout) {
-        layout.height(100)
-        .leftMargin(10)
-        .rightMargin(10)
-        .centerY(0);
+        layout.margin(UIEdgeInsetsMake(20, 20, 20, 20));
     }];
     
-    for (int i = 0; i < 4; i++) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor greenColor];
-        [outView addSubview:view];
-        
-        [view dll_setLayout:^(DLLLayout *layout) {
-            layout.width(50)
-            .height(50)
-            .centerY(0)
-            .relative.left.with(outView.dll_width, -200, (1.0 / 5) * ( i + 1), i * 50);
-        }];
+    int count = 8;
+    for (int i = 0; i < count; i++) {
+        UIView *innerView = [[UIView alloc] init];
+        innerView.backgroundColor = [UIColor colorWithRed:rand()/(double)RAND_MAX green:rand()/(double)RAND_MAX blue:rand()/(double)RAND_MAX alpha:1];
+        innerView.tag = i + 1;
+        [outView addSubview:innerView];
     }
     
+    for (int i = 0; i < count; i++) {
+        UIView *view = outView.subviews[i];
+        
+        [view dll_setLayout:^(DLLLayout *layout) {
+            layout.relative.width.to(view.dll_height.multiple(2))
+            .centerX(0);
+            if (i == 0) {
+                layout.topMargin(10);
+            } else {
+                UIView *prevView = outView.subviews[i - 1];
+                layout.relative.top.to(prevView.dll_bottom);
+            }
+            
+            if (i == count - 1) {
+                layout.relative.height.to(outView.dll_height.regulation(-20).multiple(1.0 / count));
+            } else {
+                UIView *nextView = outView.subviews[i + 1];
+                layout.relative.height.to(nextView.dll_height);
+            }
+        }];
+    }
 }
 
 - (void)clickButton:(id)sender {

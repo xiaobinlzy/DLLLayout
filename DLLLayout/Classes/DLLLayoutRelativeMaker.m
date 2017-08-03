@@ -9,6 +9,7 @@
 #import "DLLLayoutRelativeMaker.h"
 #import "DLLLayout+Private.h"
 #import "DLLLayoutRelativeMaker+Private.h"
+#import "DLLLayoutRelative+Private.h"
 
 
 
@@ -72,33 +73,24 @@
     self = [super init];
     if (self) {
         typeof(self) __weak weakSelf = self;
-        _to = ^DLLLayout *(DLLLayoutRelative relative) {
-            return [weakSelf layoutWithRelative:relative offset:0 multi:1 value:0];
-        };
-        _withOffset = ^DLLLayout *(DLLLayoutRelative relative, CGFloat offset) {
-            return [weakSelf layoutWithRelative:relative offset:offset multi:1 value:0];
-        };
-        _withMulti = ^DLLLayout *(DLLLayoutRelative relative, CGFloat multi) {
-            return [weakSelf layoutWithRelative:relative offset:0 multi:multi value:0];
-        };
-        _with = ^DLLLayout *(DLLLayoutRelative relative, CGFloat value, CGFloat multi, CGFloat offset) {
-            return [weakSelf layoutWithRelative:relative offset:offset multi:multi value:value];
+        _to = ^DLLLayout *(DLLLayoutRelative *relative) {
+            return [weakSelf layoutWithRelative:relative];
         };
     }
     return self;
 }
 
-- (DLLLayout *)layoutWithRelative:(DLLLayoutRelative)relative offset:(CGFloat)offset multi:(CGFloat)multi value:(CGFloat)value {
+- (DLLLayout *)layoutWithRelative:(DLLLayoutRelative *)relative {
     
     DLLLayout *layout = self.layout;
     
     DLLLayoutRule rule;
     rule.type = DLLLayoutRuleTypeRelative;
-    rule.value = value;
-    rule.multi = multi;
-    rule.offset = offset;
+    rule.value = relative.regulationValue;
+    rule.multi = relative.multipleValue;
+    rule.offset = relative.offsetValue;
     rule.relativeType = relative.type;
-    rule.relativeView = relative.view;
+    rule.relativeView = (__bridge void *)relative.view;
     
     switch (self.type) {
         case DLLRelativeLeft: {

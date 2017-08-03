@@ -18,7 +18,15 @@
 
 @property (assign, nonatomic) DLLLayoutRuleGroup yRules;
 
+
+
 @property (assign, nonatomic) BOOL needsLayout;
+
+- (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis;
+
+- (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis;
+
+
 
 - (void)setCalculating:(BOOL)calculating relative:(int)index forAxis:(DLLLayoutAxis)axis;
 
@@ -26,13 +34,13 @@
 
 - (BOOL)isCalculatingRelativeForAxis:(DLLLayoutAxis)axis;
 
-- (BOOL)needsLayoutForAxis:(DLLLayoutAxis)axis;
 
-- (void)setNeedsLayout:(BOOL)needsLayout forAxis:(DLLLayoutAxis)axis;
 
-- (BOOL)hasEstimatedForAxis:(DLLLayoutAxis)axis;
 
-- (void)setHasEstimated:(BOOL)estimated forAxis:(DLLLayoutAxis)axis;
+
+- (BOOL)hasEstimatedRelative:(int)index forAxis:(DLLLayoutAxis)axis;
+
+- (void)setEstimated:(BOOL)estimated relative:(int)index forAxis:(DLLLayoutAxis)axis;
 
 
 @property (assign, nonatomic) UIView *view;
@@ -43,7 +51,7 @@
 
 
 
-- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis force:(BOOL)force;
+- (DLLLayoutAxisFrame)axisFrameForAxis:(DLLLayoutAxis)axis;
 
 - (void)setNeedsUpdateContentSize;
 
