@@ -18,8 +18,8 @@ DLLLayout 是一个基于 UIView.frame 的轻量级 iOS 布局框架。相比苹
 
   s.ios.deployment_target = '6.0'
 
-  s.source_files = 'DLLLayout/Classes/**/*'
-  s.public_header_files = 'DLLLayout/Classes/DLLLayout.h', 'DLLLayout/Classes/DLLLayoutDefine.h', 'DLLLayout/Classes/UIView+DLLLayout.h', 'DLLLayout/Classes/DLLLayoutRelativeMaker.h', 'DLLLayout/Classes/UIScrollView+DLLLayout.h', 'DLLLayout/Classes/DLLLayoutRelative.h'
+  s.source_files = 'DLLLayout/**/*'
+  s.public_header_files = 'DLLLayout/DLLLayout.h', 'DLLLayout/DLLLayoutDefine.h', 'DLLLayout/UIView+DLLLayout.h', 'DLLLayout/DLLLayoutRelativeMaker.h', 'DLLLayout/UIScrollView+DLLLayout.h', 'DLLLayout/DLLLayoutRelative.h'
 
 
 end
