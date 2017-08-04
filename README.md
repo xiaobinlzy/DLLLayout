@@ -93,8 +93,8 @@ pod "DLLLayout"
 ```
 
 ## Feature
-1. X、Y轴的依赖关系相互独立，避免一部分的循环依赖。
-2. 优化自适应宽高的性能。
+1. 优化布局性能，减少布局计算次数。
+2. UIScrollView.contentSize 设置依赖条件。
 
 ## Author
 
