@@ -68,7 +68,7 @@
     [inner3 dll_setLayout:^(DLLLayout *layout) {
         layout.relative.left.to(inner1.dll_right)
         .relative.width.to(inner2.dll_left.multiple(10))
-        .relative.centerY.to(inner2.dll_top)
+        .centerY(0)
         .relative.height.to(inner1.dll_height);
     }];
     

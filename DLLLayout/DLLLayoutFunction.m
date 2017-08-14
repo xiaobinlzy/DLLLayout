@@ -55,10 +55,6 @@ void dll_layoutSubviews(UIView *view) {
 void dll_removeViewConstraints(UIView *view) {
     view.autoresizingMask = UIViewAutoresizingNone;
     view.translatesAutoresizingMaskIntoConstraints = YES;
-//    NSArray *subviews = view.subviews;
-//    for (UIView *view in subviews) {
-//        dll_removeViewConstraints(view);
-//    }
 }
 
 void dll_swizzleMethod(Class class, SEL origin, SEL target) {
