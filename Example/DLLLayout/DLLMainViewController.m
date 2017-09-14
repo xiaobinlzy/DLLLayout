@@ -15,6 +15,8 @@
 #import "DLLListViewController.h"
 #import "DLLCycleRelativeViewController.h"
 #import "DLLAnimationViewController.h"
+#import "DLLAffineTransformViewController.h"
+#import "DLLAutoLayoutViewController.h"
 
 
 @interface DLLMainViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -31,7 +33,7 @@
     [super viewDidLoad];
     self.title = @"请横竖屏切换";
     
-    _data = @[@"边距", @"居中", @"列表", @"循环依赖", @"视图动画"];
+    _data = @[@"边距", @"居中", @"列表", @"循环依赖", @"视图动画", @"仿射变换", @"兼容自动布局"];
     
     _tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
@@ -83,6 +85,12 @@
             break;
         case 4:
             viewController = [[DLLAnimationViewController alloc] init];
+            break;
+        case 5:
+            viewController = [[DLLAffineTransformViewController alloc] init];
+            break;
+        case 6:
+            viewController = [[DLLAutoLayoutViewController alloc] init];
             break;
     }
     if (viewController) {

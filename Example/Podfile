@@ -3,7 +3,8 @@ use_frameworks!
 target 'DLLLayout_Example' do
   pod 'DLLLayout', :path => '../'
 
-
+  pod 'Masonry'
+  
   target 'DLLLayout_Tests' do
     inherit! :search_paths
 
