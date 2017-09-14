@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DLLLayout'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'DLLLayout 是一个基于 UIView.frame 的轻量级 iOS 布局框架。'
 
 

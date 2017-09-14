@@ -246,7 +246,9 @@ static int const DLLEstimatedLayoutY = 1 << 10;
     axisFrame = DLLLayoutAxisFrameFromRuleGroup(rules, axisFrame, superValue, _view);
     axisFrame.isEstimated = isEstimated;
     
-    frame = _view.frame;
+    CGSize size = _view.bounds.size;
+    CGPoint center = _view.center;
+    frame = CGRectMake(center.x - size.width / 2, center.y - size.height / 2, size.width, size.height);
     
     switch (axis) {
         case DLLLayoutAxisX:
@@ -259,7 +261,8 @@ static int const DLLEstimatedLayoutY = 1 << 10;
             frame.size.height = axisFrame.value;
             break;
     }
-    _view.frame = frame;
+    _view.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    _view.center = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
     
     if (originFrame.value != axisFrame.value) {
         NSArray *subviews = _view.subviews;
