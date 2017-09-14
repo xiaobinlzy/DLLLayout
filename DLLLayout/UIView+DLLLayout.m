@@ -35,10 +35,6 @@
     [self.dll_layout setNeedsUpdateContentSize];
 }
 
-- (void)dll_dealloc {
-    // TODO
-}
-
 #pragma mark - dll layout
 - (void)dll_layoutSubviews {
     DLLLayout *layoug = self.dll_layout;
