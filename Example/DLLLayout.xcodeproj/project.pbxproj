@@ -13,6 +13,7 @@
 		4E71AC391F2B39440054A774 /* DLLCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71AC381F2B39440054A774 /* DLLCenterViewController.m */; };
 		4E71D2331F6A4C7400867076 /* DLLAffineTransformViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71D2321F6A4C7400867076 /* DLLAffineTransformViewController.m */; };
 		4E71D2361F6A4DEB00867076 /* DLLAutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71D2351F6A4DEB00867076 /* DLLAutoLayoutViewController.m */; };
+		4E72220B1F6B7DF00020B921 /* DLLFitSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */; };
 		4E7CD0661F335CF300ECE76E /* DLLCycleRelativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7CD0651F335CF300ECE76E /* DLLCycleRelativeViewController.m */; };
 		4EB195771F2A29BC0049E6D8 /* DLLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -59,6 +60,8 @@
 		4E71D2321F6A4C7400867076 /* DLLAffineTransformViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLAffineTransformViewController.m; sourceTree = "<group>"; };
 		4E71D2341F6A4DEB00867076 /* DLLAutoLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLAutoLayoutViewController.h; sourceTree = "<group>"; };
 		4E71D2351F6A4DEB00867076 /* DLLAutoLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLAutoLayoutViewController.m; sourceTree = "<group>"; };
+		4E7222091F6B7DF00020B921 /* DLLFitSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLFitSizeViewController.h; sourceTree = "<group>"; };
+		4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLFitSizeViewController.m; sourceTree = "<group>"; };
 		4E7CD0641F335CF300ECE76E /* DLLCycleRelativeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLCycleRelativeViewController.h; sourceTree = "<group>"; };
 		4E7CD0651F335CF300ECE76E /* DLLCycleRelativeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLCycleRelativeViewController.m; sourceTree = "<group>"; };
 		4EB195751F2A29BC0049E6D8 /* DLLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLTableViewCell.h; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				4E71D2321F6A4C7400867076 /* DLLAffineTransformViewController.m */,
 				4E71D2341F6A4DEB00867076 /* DLLAutoLayoutViewController.h */,
 				4E71D2351F6A4DEB00867076 /* DLLAutoLayoutViewController.m */,
+				4E7222091F6B7DF00020B921 /* DLLFitSizeViewController.h */,
+				4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -443,6 +448,7 @@
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				4E71AC361F2B34470054A774 /* DLLMarginViewController.m in Sources */,
 				4E3AE4A81F3468120009E00D /* DLLAnimationViewController.m in Sources */,
+				4E72220B1F6B7DF00020B921 /* DLLFitSizeViewController.m in Sources */,
 				4E66A9771F2F205700847823 /* DLLListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
