@@ -93,8 +93,8 @@ pod "DLLLayout"
 ```
 
 ## Feature
-1. 优化布局性能，减少布局计算次数。
-2. UIScrollView.contentSize 设置依赖条件。
+1. 比 Auto Layout 性能更高。
+2. 支持 Affine Transform。
 
 ## Author
 
