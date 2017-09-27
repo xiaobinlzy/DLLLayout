@@ -73,6 +73,6 @@ struct DLLLayoutRelativeViews {
 };
 typedef struct DLLLayoutRelativeViews DLLLayoutRelativeViews;
 
-BOOL DLLLayoutRuleFlagIsNeedToCalculateValue(DLLLayoutRuleFlag flag);
+BOOL DLLLayoutRuleFlagIsNeedToFitSize(DLLLayoutRuleFlag flag);
 
 DLLLayoutAxisFrame DLLLayoutAxisFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLLLayoutAxisFrame frame, CGFloat max, UIView *view);

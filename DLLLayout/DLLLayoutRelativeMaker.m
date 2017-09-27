@@ -10,6 +10,7 @@
 #import "DLLLayout+Private.h"
 #import "DLLLayoutRelativeMaker+Private.h"
 #import "DLLLayoutRelative+Private.h"
+#import "UIView+DLLLayoutPrivate.h"
 
 
 
@@ -158,8 +159,6 @@
             break;
             
     }
-    
-    
     
     
     return layout;

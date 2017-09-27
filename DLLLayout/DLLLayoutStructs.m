@@ -67,7 +67,7 @@ CGFloat DLLLayoutRuleValue(DLLLayoutRule rule) {
 }
 
 
-BOOL DLLLayoutRuleFlagIsNeedToCalculateValue(DLLLayoutRuleFlag flag) {
+BOOL DLLLayoutRuleFlagIsNeedToFitSize(DLLLayoutRuleFlag flag) {
     switch (flag) {
         case DLLLayoutRuleFlagHead:
         case DLLLayoutRuleFlagTail:
@@ -204,16 +204,12 @@ DLLLayoutAxisFrame DLLLayoutAxisFrameFromRuleGroup(DLLLayoutRuleGroup rules, DLL
         }
             break;
     }
-    if (frame.value < 0) {
-        frame.value = 0;
-    } else {
-        CGFloat integerPart = floor(frame.value);
-        CGFloat decimalsPart = frame.value - integerPart;
-        if (decimalsPart > 0 && decimalsPart < 0.5) {
-            frame.value = integerPart + 0.5;
-        } else if (decimalsPart > 0.5) {
-            frame.value = integerPart + 1;
-        }
+    CGFloat integerPart = floor(frame.value);
+    CGFloat decimalsPart = frame.value - integerPart;
+    if (decimalsPart > 0 && decimalsPart < 0.5) {
+        frame.value = integerPart + 0.5;
+    } else if (decimalsPart > 0.5) {
+        frame.value = integerPart + 1;
     }
     return frame;
 }

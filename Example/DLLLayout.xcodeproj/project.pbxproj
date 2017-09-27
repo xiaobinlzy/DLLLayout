@@ -15,6 +15,7 @@
 		4E71D2361F6A4DEB00867076 /* DLLAutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71D2351F6A4DEB00867076 /* DLLAutoLayoutViewController.m */; };
 		4E72220B1F6B7DF00020B921 /* DLLFitSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */; };
 		4E7CD0661F335CF300ECE76E /* DLLCycleRelativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7CD0651F335CF300ECE76E /* DLLCycleRelativeViewController.m */; };
+		4E91AB661F7B70FE00A0E7CC /* DLLMultipleValueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E91AB651F7B70FE00A0E7CC /* DLLMultipleValueViewController.m */; };
 		4EB195771F2A29BC0049E6D8 /* DLLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -64,6 +65,8 @@
 		4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLFitSizeViewController.m; sourceTree = "<group>"; };
 		4E7CD0641F335CF300ECE76E /* DLLCycleRelativeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLCycleRelativeViewController.h; sourceTree = "<group>"; };
 		4E7CD0651F335CF300ECE76E /* DLLCycleRelativeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLCycleRelativeViewController.m; sourceTree = "<group>"; };
+		4E91AB641F7B70FE00A0E7CC /* DLLMultipleValueViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLLMultipleValueViewController.h; sourceTree = "<group>"; };
+		4E91AB651F7B70FE00A0E7CC /* DLLMultipleValueViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLLMultipleValueViewController.m; sourceTree = "<group>"; };
 		4EB195751F2A29BC0049E6D8 /* DLLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLTableViewCell.h; sourceTree = "<group>"; };
 		4EB195761F2A29BC0049E6D8 /* DLLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLTableViewCell.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* DLLLayout_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLLLayout_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +193,8 @@
 				4E71D2351F6A4DEB00867076 /* DLLAutoLayoutViewController.m */,
 				4E7222091F6B7DF00020B921 /* DLLFitSizeViewController.h */,
 				4E72220A1F6B7DF00020B921 /* DLLFitSizeViewController.m */,
+				4E91AB641F7B70FE00A0E7CC /* DLLMultipleValueViewController.h */,
+				4E91AB651F7B70FE00A0E7CC /* DLLMultipleValueViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -362,13 +367,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DLLLayout_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4EFE4214845AD160CF478146 /* [CP] Check Pods Manifest.lock */ = {
@@ -377,13 +385,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DLLLayout_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		51F98ACE11BD866464CA5B84 /* [CP] Embed Pods Frameworks */ = {
@@ -392,9 +403,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DLLLayout_Example/Pods-DLLLayout_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DLLLayout/DLLLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DLLLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -444,6 +460,7 @@
 				6003F59E195388D20070C39A /* DLLAppDelegate.m in Sources */,
 				4E71AC391F2B39440054A774 /* DLLCenterViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* DLLMainViewController.m in Sources */,
+				4E91AB661F7B70FE00A0E7CC /* DLLMultipleValueViewController.m in Sources */,
 				4E7CD0661F335CF300ECE76E /* DLLCycleRelativeViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				4E71AC361F2B34470054A774 /* DLLMarginViewController.m in Sources */,

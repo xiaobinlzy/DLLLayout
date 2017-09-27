@@ -18,6 +18,7 @@
 #import "DLLAffineTransformViewController.h"
 #import "DLLAutoLayoutViewController.h"
 #import "DLLFitSizeViewController.h"
+#import "DLLMultipleValueViewController.h"
 
 
 @interface DLLMainViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -34,7 +35,7 @@
     [super viewDidLoad];
     self.title = @"请横竖屏切换";
     
-    _data = @[@"边距", @"居中", @"列表", @"循环依赖", @"视图动画", @"仿射变换", @"兼容自动布局", @"自适应"];
+    _data = @[@"边距", @"居中", @"列表", @"循环依赖", @"视图动画", @"仿射变换", @"兼容自动布局", @"自适应", @"倍数值依赖"];
     
     _tableView = [[UITableView alloc] init];
     _tableView.delegate = self;
@@ -95,6 +96,9 @@
             break;
         case 7:
             viewController = [[DLLFitSizeViewController alloc] init];
+            break;
+        case 8:
+            viewController = [[DLLMultipleValueViewController alloc] init];
             break;
     }
     if (viewController) {

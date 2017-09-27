@@ -195,7 +195,7 @@ static int const DLLEstimatedLayoutY = 1 << 10;
             break;
     }
     
-    if (DLLLayoutRuleFlagIsNeedToCalculateValue(rules.flag)) {
+    if (DLLLayoutRuleFlagIsNeedToFitSize(rules.flag)) {
         // 自适应
         CGSize calculatedSize;
         DLLLayoutRuleGroup otherRules;
@@ -210,7 +210,7 @@ static int const DLLEstimatedLayoutY = 1 << 10;
         }
         DLLLayoutRule valueRule;
         valueRule.type = DLLLayoutRuleTypeValue;
-        if (DLLLayoutRuleFlagIsNeedToCalculateValue(otherRules.flag)) {
+        if (DLLLayoutRuleFlagIsNeedToFitSize(otherRules.flag)) {
             calculatedSize = [self sizeThatFitsValue:CGFLOAT_MAX axis:axis];
         } else {
             calculatedSize = [self sizeThatFitsValue:[self axisFrameForAxis:!axis].value axis:axis];
@@ -230,16 +230,7 @@ static int const DLLEstimatedLayoutY = 1 << 10;
         
     }
     
-    BOOL isEstimated = [self isCalculatingRelativeForAxis:axis];
-    if (!isEstimated) {
-        if ((layoutEstimate & 1) != 0 && ![self hasEstimatedRelative:0 forAxis:axis]) {
-            isEstimated = YES;
-        }
-        if ((layoutEstimate & (1 << 1)) != 0 && ![self hasEstimatedRelative:1 forAxis:axis]) {
-            isEstimated = YES;
-        }
-    }
-    
+    BOOL isEstimated = [self isCalculatingRelativeForAxis:axis];    
     
     DLLLayoutAxisFrame originFrame = axisFrame;
     
@@ -253,12 +244,12 @@ static int const DLLEstimatedLayoutY = 1 << 10;
     switch (axis) {
         case DLLLayoutAxisX:
             frame.origin.x = axisFrame.origin;
-            frame.size.width = axisFrame.value;
+            frame.size.width = axisFrame.value >= 0 ? axisFrame.value : 0;
             break;
             
         case DLLLayoutAxisY:
             frame.origin.y = axisFrame.origin;
-            frame.size.height = axisFrame.value;
+            frame.size.height = axisFrame.value >= 0 ? axisFrame.value : 0;
             break;
     }
     _view.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -286,23 +277,9 @@ static int const DLLEstimatedLayoutY = 1 << 10;
         }
         
     }
-    
-    if ((originFrame.value != axisFrame.value || originFrame.origin != axisFrame.origin) && ![self needsLayoutForAxis:axis]) {
-        DLLLayout *superValue = _view.superview.dll_layout;
-        if (superValue.flag) {
-            DLLLayoutRelativeViews superRelativeViewsX = superValue.relativeViewsX;
-            DLLLayoutRelativeViews superRelativeViewsY = superValue.relativeViewsY;
-            void *pView = (__bridge void *)_view;
-            if ((superRelativeViewsX.view1 == pView || superRelativeViewsX.view2 == pView) && ![superValue needsLayoutForAxis:DLLLayoutAxisX]) {
-                [superValue setNeedsLayout:YES forAxis:DLLLayoutAxisX];
-                [superValue axisFrameForAxis:DLLLayoutAxisX];
-            }
-            
-            if ((superRelativeViewsY.view1 == pView || superRelativeViewsY.view2 == pView) && ![superValue needsLayoutForAxis:DLLLayoutAxisY]) {
-                [superValue setNeedsLayout:YES forAxis:DLLLayoutAxisY];
-                [superValue axisFrameForAxis:DLLLayoutAxisY];
-            }
-        }
+
+    if (((fabs(originFrame.value - axisFrame.value) > 1) || (fabs(originFrame.origin - axisFrame.origin)) > 1) && ![self needsLayoutForAxis:axis]) {
+        [_view dll_checkRelativeViewsForAxis:axis];
     }
     
     

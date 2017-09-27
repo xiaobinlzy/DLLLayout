@@ -42,7 +42,7 @@
         dll_removeViewConstraints(self);
     }
     NSArray *subviews = self.subviews;
-
+    
     
     for (UIView *view in subviews) {
         dll_resetViewFrame(view);
@@ -61,6 +61,7 @@
     layoutObj.needsLayout = YES;
     return layoutObj.flag;
 }
+
 
 - (DLLLayoutFlag)dll_updateLayout:(void (^)(DLLLayout *))layout {
     NSAssert(layout, @"layout can not be nil.");
@@ -106,6 +107,39 @@
     layout.flag &= ~flag;
     return layout.flag;
 }
+
+- (void)dll_checkRelativeViewsForAxis:(DLLLayoutAxis)axis {
+    [self dll_checkRelativeView:self.superview forAxis:axis];
+    NSArray *brotherViews = self.superview.subviews;
+    for (UIView *view in brotherViews) {
+        [self dll_checkRelativeView:view forAxis:axis];
+    }
+}
+
+- (void)dll_checkRelativeView:(UIView *)view forAxis:(DLLLayoutAxis)axis {
+    DLLLayout *value = view.dll_layout;
+    if (value.flag) {
+        DLLLayoutRelativeViews relativeViewsX = value.relativeViewsX;
+        DLLLayoutRelativeViews relativeViewsY = value.relativeViewsY;
+        void *pView = (__bridge void *)self;
+        if (((relativeViewsX.view1 == pView && relativeViewsX.view1Axis == axis)
+             || (relativeViewsX.view2 == pView && relativeViewsX.view2Axis == axis))
+            && ![value needsLayoutForAxis:DLLLayoutAxisX])
+        {
+            [value setNeedsLayout:YES forAxis:DLLLayoutAxisX];
+            [value axisFrameForAxis:DLLLayoutAxisX];
+        }
+        
+        if (((relativeViewsY.view1 == pView && relativeViewsY.view1Axis == axis)
+             || (relativeViewsY.view2 == pView && relativeViewsY.view2Axis == axis))
+            && ![value needsLayoutForAxis:DLLLayoutAxisY])
+        {
+            [value setNeedsLayout:YES forAxis:DLLLayoutAxisY];
+            [value axisFrameForAxis:DLLLayoutAxisY];
+        }
+    }
+}
+
 
 
 #pragma mark - dll property

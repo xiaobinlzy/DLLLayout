@@ -16,4 +16,6 @@
 
 - (void)dll_layoutSubviews;
 
+- (void)dll_checkRelativeViewsForAxis:(DLLLayoutAxis)axis;
+
 @end
